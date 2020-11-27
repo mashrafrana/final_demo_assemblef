@@ -1,0 +1,246 @@
+.ProfileContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  padding: 30px 15px;
+}
+
+.ProfilePhotoContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.ProfilePhotoContainer .useName {
+  margin-left: 20px;
+}
+
+.ProfilePhotoContainer h1 {
+  color: #000000;
+  font-size: 30px;
+  margin: 0;
+}
+
+.ProfilePhotoContainer p {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.ExperienceContainer {
+  background: #ffffff;
+  border: 1px solid #cdc7c7;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+.ExperienceContainer .header {
+  border-bottom: 1px solid #cdc7c7;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ExperienceContainer .header p {
+  color: #000000;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.ExperienceContainer .Content {
+  padding: 10px;
+}
+
+.ExperienceContainer .Content .Title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ExperienceContainer .Content .subTitle h6 {
+  color: #000000;
+}
+
+.ExperienceContainer .Content .Title p {
+  color: #5b5b55;
+}
+
+.ExperienceContainer .Content .years {
+  text-align: right;
+}
+
+.ExperienceContainer .Content .years span {
+  font-size: 14px;
+  color: #5b5b5b;
+}
+
+.ExperienceContainer .Content .text p {
+  color: #404040;
+  font-weight: 300;
+}
+
+.seeMore {
+  color: #fe0000;
+  font-weight: 600;
+}
+
+.ExperienceContainer hr {
+  border-top: 1px solid #cdc7c7;
+  width: 95%;
+}
+
+.FollowerSection {
+  background: #ffffff;
+  border: 1px solid #cdc7c7;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 30px;
+}
+
+.FollowerSection .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0px;
+}
+
+.FollowerSection p {
+  color: #8d8d8d;
+}
+
+.FollowerSection h1 {
+  font-size: 22px;
+  font-weight: 300;
+  color: #292929;
+}
+
+.FollowersMain {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+}
+
+.FollowingMain {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+}
+
+.FollowingWrapper {
+  padding-top: 30px;
+}
+
+.PostBoxContainer {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #cdc7c7;
+  margin-bottom: 10px;
+}
+
+.postText {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #cdc7c7;
+  padding-bottom: 15px;
+  margin-bottom: 10px;
+}
+
+.postComment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 15px;
+}
+
+.statusBox {
+  width: 100%;
+}
+
+.statusBox input {
+  background: #f6f6f6;
+  outline: none;
+  border: none;
+  margin-left: 10px;
+  border-radius: 50px;
+  width: 98%;
+  padding: 10px;
+  padding: 7px 10px;
+}
+
+.statusBox input::placeholder {
+  color: #3a3a3a;
+  font-weight: 300;
+}
+
+.ActivityBoxContainer {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #cdc7c7;
+  margin-bottom: 10px;
+}
+
+.ActivityBoxContainer .header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userDetailContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.ActivityBoxContainer .userDetail span {
+  color: #707070;
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.Attachments {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.Attachments span {
+  color: #707070;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.Status p {
+  color: #404040;
+  font-weight: 300;
+}
+
+.statusContainer {
+  margin-top: 10px;
+}
+
+.LikeContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  border-bottom: 1px solid #cdc7c7;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.likeImg {
+  padding: 7px;
+  background-color: #ff0000;
+  border-radius: 50%;
+  margin: auto 5px auto 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+}
+
+.CommentCount span {
+  color: #707070;
+  font-weight: 400;
+}
