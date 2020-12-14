@@ -24,7 +24,8 @@
     "build:prod": "webpack --config ./webpack.config.js --mode=production --devtool=false",
     "start:client": "npm install && webpack-dev-server",
     "start:backend": "node server.js",
-    "start": "concurrently \"npm run start:client\" \"npm run start:backend\""
+    "start:webrtc": "node webrtc-server.js",
+    "start": "concurrently \"npm run start:client\" \"npm run start:backend\" \"npm run start:webrtc\""
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",

@@ -61,6 +61,10 @@ module.exports = {
   ],
   devServer: {
     proxy: {
+      '/rtmp': {
+          target: 'http://localhost:4000',
+          ws: true
+      },
       '/': {
         target: 'http://localhost:8080',
         bypass: function(req, _res, _proxyOptions) {

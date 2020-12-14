@@ -1,7 +1,7 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, {Fragment} from 'react';
+import React, {useState ,Fragment, useEffect} from 'react';
 import { SpaceProps } from 'styled-system';
 import {
 //     VideoGrid,
@@ -22,24 +22,7 @@ import ParticipantLocalVideo from '../ParticipantLocalVideo';
 import fblive from "./fblive.png";
 import logo from "./assemblyf.png";
 
-const fluidStyles = `
-  height: 100%;
-  width: 100%;
-`;
 
-const staticStyles = `
-  display: flex;
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  width: 20vw;
-  max-height: 30vh;
-  height: auto;
-
-  video {
-    position: static;
-  }
-`;
 export interface BaseSdkProps {
   /** Optional css */
   css?: string;
@@ -67,66 +50,144 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   ...rest
 }) => {
   const { tileId: featureTileId } = useFeaturedTileState();
-  const { tiles, tileIdToAttendeeId } = useRemoteVideoTileState();
+  const { tiles, tileIdToAttendeeId ,attendeeIdToTileId } = useRemoteVideoTileState();
   const { tileId: contentTileId } = useContentShareState();
-  const { tileId,isVideoEnabled } = useLocalVideo();
+  const { tileId: localVideoTileId, isVideoEnabled } = useLocalVideo();
   const { roster } = useRosterState();
   const meetingManager = useMeetingManager();
-  const { isHost } = useAppState();
+  const { isHost , attendeeId } = useAppState();
+  const [attendeeIdList  ,setAttendeeIdList] = useState([]);
+  // const featureTileId = useState(_featureTileId);
+  var c :any = [];
 
-    const changeFillStyle = (color: string) => {
-       document.getElementById('main_vdo_sec').style.background = color;
-       meetingManager.audioVideo.realtimeSendDataMessage("bg", color, 1000);
+  // const attendeeId = audioVideoController.configuration.credentials.attendeeId;
+  useEffect(()=>{
+
+    let isMounted = true
+    meetingManager?.audioVideo?.realtimeSubscribeToReceiveDataMessage("attendeeIdList", (dataMessage: DataMessage) => { 
+      
+      if (isMounted) 
+      {
+        changeState(dataMessage.text());
+      }  
+    })
+    setInterval(function(){draw();}, 25);
+    return () => { isMounted = false };
+   
+  },[]);
+    
+  const changeState = (data:any)=>{
+      c = []; 
+      const listAttendee = data.replace('[','').replace(']','').split(',');
+      listAttendee.forEach((element:any) => {
+         c.push(element.replace('"','').replace('"','').toString());
+      });
+      console.log(c);
+      setAttendeeIdList(c);
     }
 
-    const fbGoLive = () => {
-      FB.ui({
-            display: 'popup',
-            method: 'live_broadcast',
-            phase: 'create'
-          }, (createRes) => {
-            console.log(createRes);
-            let mediaRecorder;
-            let mediaStream;
+  const videoHandler = (tileId : number) => {
+      
+      let lis :any = [];  
+      if(!(attendeeIdList.includes(tileIdToAttendeeId[tileId]))){
+        lis = [...attendeeIdList , tileIdToAttendeeId[tileId]];
+        setAttendeeIdList(lis);        
+      }
+      else{
+        lis =  attendeeIdList.filter(o => o !== tileIdToAttendeeId[tileId]);
+        setAttendeeIdList(lis);
+      }
+      meetingManager.audioVideo.realtimeSendDataMessage("attendeeIdList", lis, 1000);
+      console.log(attendeeIdList);
+  
+    }
 
-            FB.ui({
-                display: 'popup',
-                method: 'live_broadcast',
-                phase: 'publish',
-                broadcast_data: createRes
-              }, (publishRes) => {
-                console.log(publishRes);
-              });
-              console.log(createRes.stream_url)
-            const ws = new WebSocket(
-              'wss://13.212.108.68:3000' + // http: => ws:, https: -> wss:
-              '/rtmp/' +
-              encodeURIComponent(createRes.stream_url)
-            );
-
-            ws.addEventListener('open', (e) => {
-              console.log('WebSocket Open', e);
-              mediaStream = document.querySelector('canvas').captureStream(24); // 30 FPS
-              mediaRecorder = new MediaRecorder(mediaStream, {
-                mimeType: 'video/webm;codecs=h264',
-                videoBitsPerSecond : 3000000
-              });
-
-              mediaRecorder.addEventListener('dataavailable', (e) => {
-                ws.send(e.data);
-              });
-              mediaRecorder.addEventListener('stop', ws.close.bind(ws));
-              mediaRecorder.start(1000); // Start recording, and dump data every second
-            });
-
-            ws.addEventListener('close', (e) => {
-              console.log('WebSocket Close', e);
-              mediaRecorder.stop();
-            });
-          });
+  const addLocalVideo = () => {      
+        let lis :any = [];  
+        if(!(attendeeIdList.includes(attendeeId))){
+        
+          lis = [...attendeeIdList , attendeeId];
+          setAttendeeIdList(lis);        
+          
+        }
+        else{
+          lis =  attendeeIdList.filter(o => o !== attendeeId);
+          setAttendeeIdList(lis);
         }
 
-    const toggleLogo = () => {
+      meetingManager.audioVideo.realtimeSendDataMessage("attendeeIdList", lis, 1000);
+      console.log(attendeeIdList);
+    
+    }
+  
+  const changeFillStyle = (color: string) => {
+       document.getElementById('main_vdo_sec').style.background = color;
+       meetingManager.audioVideo.realtimeSendDataMessage("bg", color, 1000);
+       document.getElementById('color').value = color;
+    }
+  
+  const fbGoLive = () => {
+          var aud:any = document.querySelector("audio");
+    
+          FB.ui({
+                display: 'popup',
+                method: 'live_broadcast',
+                phase: 'create'
+              }, (createRes) => {
+                let mediaRecorder;
+                let mediaStream;
+      
+                FB.ui({
+                    display: 'popup',
+                    method: 'live_broadcast',
+                    phase: 'publish',
+                    broadcast_data: createRes
+                  }, (publishRes) => {
+                    console.log(publishRes);
+                  });
+    
+                const ws = new WebSocket(
+                  window.location.origin.replace("http", "ws") +
+                  '/rtmp/' +
+                  encodeURIComponent(createRes.stream_url)
+                );
+    
+                ws.addEventListener('open', (e) => {
+                  console.log('WebSocket Open', e);
+                  mediaStream = document.querySelector('canvas').captureStream(60); // 30 FPS
+                  var AudioContext = window.AudioContext || window.webkitAudioContext;
+                    const audioCtx = new AudioContext();
+                    var dest = audioCtx.createMediaStreamDestination();
+                    var localAudioStream: any = audioVideo.realtimeController.state.audioInput;
+                    var localAudio = audioCtx.createMediaStreamSource(localAudioStream);
+                    localAudio.connect(dest);
+                    var audio: any = audioVideo.audioMixController.audioStream;
+                    if(audio){
+                        var partAudio = audioCtx.createMediaStreamSource(audio);
+                        partAudio.connect(dest);
+                    }
+                  if (dest.stream.getAudioTracks().length > 0) {
+                    mediaStream.addTrack(dest.stream.getAudioTracks()[0]);
+                  }
+                  mediaRecorder = new MediaRecorder(mediaStream, {
+                    mimeType: 'video/webm;codecs=h264',
+                    videoBitsPerSecond : 3000000
+                  });
+      
+                  mediaRecorder.addEventListener('dataavailable', (e) => {
+                    ws.send(e.data);
+                  });
+                  mediaRecorder.addEventListener('stop', ws.close.bind(ws));
+                  mediaRecorder.start(1000); // Start recording, and dump data every second
+                });
+      
+                ws.addEventListener('close', (e) => {
+                  console.log('WebSocket Close', e);
+                  mediaRecorder.stop();
+                });
+              });
+            }
+  const toggleLogo = () => {
       var logo = document.getElementById('logo').value
       if (logo == 1) {
         document.getElementById('logo').value = 0;
@@ -138,123 +199,233 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
         document.getElementById('logo').value = 1;
       }
     }
-    meetingManager?.audioVideo?.realtimeSubscribeToReceiveDataMessage("logo", (dataMessage: DataMessage) => {
-        console.log(dataMessage.text());
-        if("true" === dataMessage.text()) {
-            document.getElementById('logo_dp').style.display = 'none';
-            document.getElementById('logo').value = 0;
-        } else {
-           document.getElementById('logo').value = 1;
-           document.getElementById('logo_dp').style.display = '';
-        }
-     });
-
-     meetingManager?.audioVideo?.realtimeSubscribeToReceiveDataMessage("bg", (dataMessage: DataMessage) => {
-        document.getElementById('main_vdo_sec').style.background = dataMessage.text();
-     });
-
-
-  return (
-        <Fragment>
-    <div className={"DashboardMainContent"}>
-      <div>
-      <div id="main_vdo_sec" className={"VideoSection"}>
-        <img id="logo_dp" src={logo} style={{margin: "0 20px 0 0", display: "none"}}/>
-        <div className={"MainVideoWrapper"}>
-          <div className={"Video"}>
-            { featureTileId ? <RemoteVideo
-                                tileId={featureTileId}
-                                name={name}
-                                className={"img-fluid_300"}
-                                key={featureTileId}
-                              /> :
-                                <LocalVideo
-                                    nameplate={"Me"}
-                                    className={"img-fluid_300"}
-                                />
-            }
-          </div>
-          <div className={"MainVideoFourPerson"}>
-            { featureTileId != null ?
-                <div className={"Video"}>
-                    <LocalVideo
-                       nameplate={"Me"}
-                       className={"img-fluid_140"}
-                        />
-                </div>
-               : null
-            }
-            { tiles.filter(o => o !== featureTileId).map(tileId => {
-                const attendee = roster[tileIdToAttendeeId[tileId]] || {};
-                const { name }: any = attendee;
-                return (
-                  <div key={tileId} className={"Video"}>
-                      <RemoteVideo
-                        tileId={tileId}
-                        name={name}
-                        className={"img-fluid_140"}
-                        key={tileId}
-                      />
-                  </div>
-                );
-               })}
-          </div>
-        </div>
-      </div>
-      <div className={"videoMembersBottom"}>
-        {isVideoEnabled ?
-            <ParticipantLocalVideo
-            local= {true}
-            tileId={tileId}
-                />
-          :null}
-        { tiles.map(tileId => {
-            return (
-            
-              <ParticipantLocalVideo
-                local= {false}
-                tileId={tileId}
-                />
-            );
-        })}
-{/* <>
-<br/>
-<br/>
-<br/>
-
-<LocalVideo
-    nameplate={"Me"}
-    className={"img-fluid"}
-/>
-<RemoteVideo
-tileId={null}
-name={null}
-className={"img-fluid"}
-
-/>
-
-</> */}
-
-      </div>
-        { isHost ?
-            <><img onClick={fbGoLive} src={fblive} width="100px" height="40px"/>
-            <div style={{display: 'grid', gridColumnGap: '20px',gridTemplateColumns: '5px 5px 5px 5px 5px 5px',gridTemplateRows: '20px', padding: '10px 0 0 0'}}>
-            <div onClick={() => changeFillStyle('#FFF000')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'yellow' }}></div>
-            <div onClick={() => changeFillStyle('#000000')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'black' }}></div>
-            <div onClick={() => changeFillStyle('#FFFFFF')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'white' }}></div>
-            <div onClick={() => changeFillStyle('#FCAB86')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'#FCAB86' }}></div>
-            <div onClick={() => changeFillStyle('#FFE087')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'#FFE087' }}></div>
-            <div onClick={() => changeFillStyle('#00FF98')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'#00FF98' }}></div>
-          </div>
-          <div onClick={() => toggleLogo()} style={{float:'right',width: '100px',height: '20px',fontSize: 'small',marginRight: '160px',cursor: 'pointer'}}>
-            <img src={logo} id="af_logo"/>
-          </div> </>: null
+ 
+  meetingManager?.audioVideo?.realtimeSubscribeToReceiveDataMessage("logo", (dataMessage: DataMessage) => {
+    
+      if("true" === dataMessage.text()) {
+          document.getElementById('logo_dp').style.display = 'none';
+          document.getElementById('logo').value = 0;
+      } else {
+          document.getElementById('logo').value = 1;
+          document.getElementById('logo_dp').style.display = '';
       }
-      </div>
-      </div>
-      <input type='hidden' id='logo'></input>
-    </Fragment>
-  );
+    });
+
+  meetingManager?.audioVideo?.realtimeSubscribeToReceiveDataMessage("bg", (dataMessage: DataMessage) => {
+      document.getElementById('main_vdo_sec').style.background = dataMessage.text();
+    });
+  
+  const draw = () => {
+      var init_x = 60;
+      var init_y = 60;
+      var big_img_width = 400
+      var big_img_height = 225
+      var small_img_width = 169
+      var small_img_height = 99
+      var gap = 20
+      // var all_videos = document.getElementsByClassName('canvas_vdo')
+      // var all_videos_filtered = [];
+      // for (var i = 0; i < all_videos.length; i++) {
+      //   if(all_videos[i].attributes["data-active"].nodeValue == "true")
+      //     all_videos_filtered.push(all_videos[i])
+      // }
+      // var video = []
+      // for (var i = 0; i < all_videos_filtered.length; i++) {
+      //   if(all_videos_filtered[i].className.indexOf('ch-featured-tile') != -1)
+      //     video.push(all_videos_filtered[i])
+      // }
+      // for (var i = 0; i < all_videos_filtered.length; i++) {
+      //   if(all_videos_filtered[i].className.indexOf('ch-featured-tile') == -1)
+      //     video.push(all_videos_filtered[i]) 
+      // }
+      var canvas = document.getElementById("canvas");
+      var video:any = [];
+      var ctx = canvas?.getContext('2d');
+      if(ctx){
+        var color = document.getElementById('color').value;
+        if(color)
+          ctx.fillStyle = color
+          ctx.fillRect(0,0, 900, 350)
+        var logo = document.getElementById('logo').value;
+        if (logo == 1 || logo == '1'){
+          var img = document.getElementById('af_logo');
+          ctx.drawImage(img, init_x + big_img_width + gap*2 + small_img_width*2 - 150, 10, 126, 46)
+        }
+      }
+
+      var x1 = document.querySelector(".MainVideoWrapper video");
+      video.push(x1);
+      // var x2 = document.querySelectorAll(".MainVideoFourPerson video");
+      // video.push(x2);
+
+      // var x3 = document.querySelectorAll("ch-video");
+      // video.push(x3);
+
+      if(video && ctx){
+        for (let i = 0; i < video.length; i ++){
+          if(i == 0)
+            ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
+          else if (i == 1) {
+            ctx.drawImage(video[i], init_x + big_img_width + gap, init_y, small_img_width, small_img_height);  
+          }
+          else if (i == 2) {
+            ctx.drawImage(video[i], init_x + big_img_width + small_img_width + gap*2, init_y, small_img_width, small_img_height);  
+          }
+          else if (i == 3) {
+            ctx.drawImage(video[i], init_x + big_img_width + gap, init_y + small_img_height + gap, small_img_width, small_img_height);  
+          }
+          else if (i == 4) {
+            ctx.drawImage(video[i], init_x + big_img_width + small_img_width + gap * 2, init_y + small_img_height + gap, small_img_width, small_img_height);  
+          }
+
+        }
+      }
+      // if(all_videos_filtered_.length != all_videos_filtered.length){
+      //   for (var i = 0; i < all_videos_filtered.length; i++){
+      //     all_videos_filtered_ = []
+      //     all_videos_filtered_.push(all_videos_filtered[i])
+      //   }
+      // }
+    }
+
+    
+  return (
+      <Fragment>
+         {/* { isHost ? <canvas id="canvas" width="900" height="350" style={{borderRadius: '20px',backgroundColor:'red', display:''}}></canvas>:null}            */}
+          <div className={"DashboardMainContent"}>
+              <div id="main_vdo_sec" className={"VideoSection"}>
+                <img id="logo_dp" src={logo} style={{margin: "0 20px 0 0", display: "none"}}/>
+                <div className={"MainVideoWrapper"}>
+                  <div className={"Video"}>
+                      {attendeeIdList.includes(tileIdToAttendeeId[featureTileId])?
+
+                        attendeeIdList.filter(o=> o === tileIdToAttendeeId[featureTileId]).map(featureAttendeeId => {
+                          return (
+                            <>
+                            {featureTileId ?
+                                  <ParticipantLocalVideo
+                                      tileId={featureTileId}
+                                      className ={"img-fluid_300"}
+                                      />
+                                      :
+                                      <ParticipantLocalVideo
+                                      tileId={localVideoTileId}
+                                      className ={"img-fluid_300"}
+                                      />
+                            }
+                            </>
+                          );
+                        })
+                        :
+                        attendeeIdList.filter(o=> o !== attendeeIdToTileId[featureTileId]).map(remoteAttendeeId => {
+                          let tileId = attendeeIdToTileId[remoteAttendeeId];
+                          
+                          if(remoteAttendeeId === attendeeId){
+                               return (
+                                <ParticipantLocalVideo
+                                      tileId={localVideoTileId}
+                                      className ={"img-fluid_300"}
+                                    />    
+                          );
+                          }
+                        })
+
+                      }
+  
+                        
+                        
+                  </div>
+                  <div className={"MainVideoFourPerson"}>
+                    {attendeeIdList.filter(o=> o !== attendeeIdToTileId[featureTileId]).map(remoteAttendeeId => {
+                        let tileId = attendeeIdToTileId[remoteAttendeeId];
+                        const attendee = roster[tileIdToAttendeeId[tileId]] || {};
+                        const { name }: any = attendee;
+                       
+                        return (
+                        
+                          <>
+                            {featureTileId !== tileId ? 
+
+                                  <div key={tileId} className={"Video"}>
+                                    { remoteAttendeeId === attendeeId ?
+                                      <ParticipantLocalVideo
+                                            tileId={localVideoTileId}
+                                            className ={"img-fluid_140"}
+                                          />    
+                                      :
+                                    
+                                      <ParticipantLocalVideo
+                                        tileId={tileId}
+                                        className ={"img-fluid_140"}
+                                        />
+                                      
+                                    }
+                                  </div>
+                            :null}
+                          </>
+                          );
+                      })
+
+                      }
+                  </div>
+                </div>
+              </div>
+            <div className={"videoMembersBottom"}>              
+              <div>
+                <LocalVideo
+                        nameplate={"Me"}
+                        className={"img-fluid_140"}
+                    />
+                   {isHost ? <input type="button" value="off" style={{width : "100px",height:'40px'}} 
+                              onClick={() =>{
+                                addLocalVideo();  
+                                }} /> : null }
+              </div>
+            { isHost ?
+             tiles.map(tileId => {               
+                        const attendee = roster[tileIdToAttendeeId[tileId]] || {};
+                        const { name }: any = attendee;
+                        return (
+                          <div key={tileId} className={"Video"}>
+                              
+                              <RemoteVideo
+                                tileId={tileId}
+                                name={name}
+                                className={"img-fluid_140"}
+                                key={tileId}
+                              />
+                              {isHost ?<input type="button" value={tileId} style={{width : "100px",height:'40px'}} 
+                              onClick={() =>{
+                                videoHandler(tileId);  
+                                }} ></input>:null}
+                          </div>
+                        );
+            }):null}
+            </div>
+              { isHost ?
+                  <>
+                  <div style={{display: 'grid', gridColumnGap: '60px',gridTemplateColumns: '75px 75px',gridTemplateRows: '20px', padding: '90px 0 0 0'}}>
+                      <img onClick={fbGoLive} src={fblive} width="100px" height="40px"/>
+                      <img src={logo} id="af_logo" onClick={() => toggleLogo()}/>
+                   </div>   
+                  <div style={{marginTop : '30px' , display: 'grid', gridColumnGap: '20px',gridTemplateColumns: '5px 5px 5px 5px 5px 5px',gridTemplateRows: '20px', padding: '10px 0 0 0'}}>
+                  <div onClick={() => changeFillStyle('#FFF000')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'yellow' }}></div>
+                  <div onClick={() => changeFillStyle('#000000')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'black' }}></div>
+                  <div onClick={() => changeFillStyle('#FFFFFF')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'white' }}></div>
+                  <div onClick={() => changeFillStyle('#FCAB86')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'#FCAB86' }}></div>
+                  <div onClick={() => changeFillStyle('#FFE087')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'#FFE087' }}></div>
+                  <div onClick={() => changeFillStyle('#00FF98')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'#00FF98' }}></div>
+                </div>
+                </>: null
+              }
+              <input type='hidden' id='logo'></input>
+              <input type='hidden' id='color'></input>
+               
+          </div>  
+
+      </Fragment>
+     
+    );
 };
 
 export default CustomVideoTileGrid;

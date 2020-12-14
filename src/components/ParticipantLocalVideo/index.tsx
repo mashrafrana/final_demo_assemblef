@@ -18,15 +18,6 @@ const StyledLocalVideo = styled<any>(VideoTile)`
 
 export const ParticipantLocalVideo: React.FC = (props) => {
 
-  const  localStyle=`{
-    object-fit: "cover", 
-    transform: "rotateY(180deg)"
-  }`;
-
-  const  remoteStyle=`{
-    objectFit: "cover", 
-  }`;
-
   const { tileId, isVideoEnabled } = useLocalVideo();
   const audioVideo = useAudioVideo();
   const videoEl = useRef<HTMLVideoElement>(null);
@@ -35,18 +26,13 @@ export const ParticipantLocalVideo: React.FC = (props) => {
     audioVideo?.hasStartedLocalVideoTile()
   );
 
-  const [current, setCurrent] = useState();
   useEffect(() => {
-    if (!audioVideo || !tileId || !videoEl.current || !isVideoEnabled) {
-      return;
-    }
-
+    
     videoEl.current.srcObject = audioVideo?.getVideoTile(props.tileId)?.tileState.boundVideoStream;
-  }, [audioVideo, tileId, isVideoEnabled]);
+  }, []);
 
   return (
-        <video  ref={videoEl} muted playsInline autoPlay width="100" className={"img-fluid"} {props.local ? localStyle : remoteStyle} />      
-      
+        <video  ref={videoEl}  muted playsInline autoPlay className={props.className}  />
   );}
 
 export default ParticipantLocalVideo;

@@ -40,6 +40,7 @@ const MeetingForm: React.FC = () => {
   const { errorMessage, updateErrorMessage } = useContext(getErrorContext());
   const history = useHistory();
 
+
   const handleJoinMeeting = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -69,7 +70,7 @@ const MeetingForm: React.FC = () => {
         attendeeInfo: JoinInfo.Attendee
       });
       console.log(JoinInfo.host);
-      setAppMeetingInfo(id, attendeeName, region, JoinInfo.host);
+      setAppMeetingInfo(id, attendeeName, region, JoinInfo.host,JoinInfo.Attendee.AttendeeId);
       history.push(routes.DEVICE);
     } catch (error) {
       updateErrorMessage(error.message);

@@ -12,9 +12,10 @@ interface AppStateValue {
   localUserName: string;
   theme: string;
   region: string;
+  attendeeId :string;
   isHost: boolean;
   toggleTheme: () => void;
-  setAppMeetingInfo: (meetingId: string, name: string, region: string, isHost: boolean) => void;
+  setAppMeetingInfo: (meetingId: string, name: string, region: string,attendeeId : string, isHost: boolean) => void;
 }
 
 const AppStateContext = React.createContext<AppStateValue | null>(null);
@@ -36,6 +37,7 @@ export function AppStateProvider({ children }: Props) {
   const [region, setRegion] = useState(query.get('region') || '');
   const [localUserName, setLocalName] = useState('');
   const [isHost, setIsHost] = useState(false);
+  const [attendeeId, setAttendeeId] = useState('');
   const [theme, setTheme] = useState(() => {
     const storedTheme = localStorage.getItem('theme');
     return storedTheme || 'light';
@@ -55,12 +57,14 @@ export function AppStateProvider({ children }: Props) {
     meetingId: string,
     name: string,
     region: string,
-    isHost: boolean
+    isHost: boolean,
+    attendeeId :string,
   ) => {
     setRegion(region);
     setMeeting(meetingId);
     setLocalName(name);
     setIsHost(isHost);
+    setAttendeeId(attendeeId);
   };
 
   const providerValue = {
@@ -68,6 +72,7 @@ export function AppStateProvider({ children }: Props) {
     localUserName,
     theme,
     region,
+    attendeeId,
     isHost,
     toggleTheme,
     setAppMeetingInfo

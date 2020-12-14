@@ -19,6 +19,7 @@ const MeetingView = () => {
   useMeetingEndRedirect();
   const { showNavbar, showRoster } = useNavigation();
 
+  
   return (
     <UserActivityProvider>
       <StyledLayout showNav={showNavbar} showRoster={showRoster}>
