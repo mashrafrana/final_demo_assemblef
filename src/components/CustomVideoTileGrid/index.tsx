@@ -14,7 +14,8 @@ import {
     useRemoteVideoTileState,
     useContentShareState,
     useRosterState,
-    useMeetingManager
+    useMeetingManager,
+    useAudioVideo
 } from 'amazon-chime-sdk-component-library-react';
 import { useAppState } from '../../providers/AppStateProvider';
 // import vp from  "./video-placeholder.jpg";
@@ -58,6 +59,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   const { isHost , attendeeId } = useAppState();
   const [attendeeIdList  ,setAttendeeIdList] = useState([]);
   // const featureTileId = useState(_featureTileId);
+  const audioVideo = useAudioVideo();
   var c :any = [];
 
   // const attendeeId = audioVideoController.configuration.credentials.attendeeId;
@@ -116,8 +118,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
         }
 
       meetingManager.audioVideo.realtimeSendDataMessage("attendeeIdList", lis, 1000);
-      console.log(attendeeIdList);
-    
+      
     }
   
   const changeFillStyle = (color: string) => {
@@ -126,9 +127,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
        document.getElementById('color').value = color;
     }
   
-  const fbGoLive = () => {
-          var aud:any = document.querySelector("audio");
-    
+  const fbGoLive = () => {    
           FB.ui({
                 display: 'popup',
                 method: 'live_broadcast',
@@ -255,8 +254,11 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
 
       var x1 = document.querySelector(".MainVideoWrapper video");
       video.push(x1);
-      // var x2 = document.querySelectorAll(".MainVideoFourPerson video");
-      // video.push(x2);
+      var x2 = document.querySelectorAll(".MainVideoFourPerson Video");
+      for(let j =0; j < x2.length; j++){
+        video.push(x2[j]);
+      }
+      
 
       // var x3 = document.querySelectorAll("ch-video");
       // video.push(x3);
@@ -291,28 +293,27 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     
   return (
       <Fragment>
-         {/* { isHost ? <canvas id="canvas" width="900" height="350" style={{borderRadius: '20px',backgroundColor:'red', display:''}}></canvas>:null}            */}
+         { isHost ? <canvas id="canvas" width="900" height="350" style={{borderRadius: '20px',backgroundColor:'red', display:''}}></canvas>:null}           
           <div className={"DashboardMainContent"}>
               <div id="main_vdo_sec" className={"VideoSection"}>
                 <img id="logo_dp" src={logo} style={{margin: "0 20px 0 0", display: "none"}}/>
                 <div className={"MainVideoWrapper"}>
                   <div className={"Video"}>
                       {attendeeIdList.includes(tileIdToAttendeeId[featureTileId])?
-
                         attendeeIdList.filter(o=> o === tileIdToAttendeeId[featureTileId]).map(featureAttendeeId => {
                           return (
                             <>
-                            {featureTileId ?
-                                  <ParticipantLocalVideo
-                                      tileId={featureTileId}
-                                      className ={"img-fluid_300"}
-                                      />
-                                      :
-                                      <ParticipantLocalVideo
-                                      tileId={localVideoTileId}
-                                      className ={"img-fluid_300"}
-                                      />
-                            }
+                              {featureTileId ?
+                                    <ParticipantLocalVideo
+                                        tileId={featureTileId}
+                                        className ={"img-fluid_300"}
+                                        />
+                                        :
+                                        <ParticipantLocalVideo
+                                        tileId={localVideoTileId}
+                                        className ={"img-fluid_300"}
+                                        />
+                              }
                             </>
                           );
                         })
@@ -329,11 +330,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                           );
                           }
                         })
-
                       }
-  
-                        
-                        
                   </div>
                   <div className={"MainVideoFourPerson"}>
                     {attendeeIdList.filter(o=> o !== attendeeIdToTileId[featureTileId]).map(remoteAttendeeId => {
@@ -342,31 +339,43 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                         const { name }: any = attendee;
                        
                         return (
-                        
                           <>
-                            {featureTileId !== tileId ? 
-
+                            { featureTileId !== tileId ? 
                                   <div key={tileId} className={"Video"}>
                                     { remoteAttendeeId === attendeeId ?
                                       <ParticipantLocalVideo
                                             tileId={localVideoTileId}
                                             className ={"img-fluid_140"}
-                                          />    
-                                      :
-                                    
+                                          />                                          
+                                      :                                    
                                       <ParticipantLocalVideo
                                         tileId={tileId}
                                         className ={"img-fluid_140"}
                                         />
-                                      
                                     }
                                   </div>
                             :null}
+                              
+                            {/* {remoteAttendeeId === attendeeId ?
+                              <div key={tileId} className={"Video"}>
+                                  <ParticipantLocalVideo
+                                    tileId={tileId}
+                                    className ={"img-fluid_140"}
+                                    />
+                              </div>
+                            :null}
+                            {featureTileId !== tileId ?
+                              <div key={tileId} className={"Video"}>
+                                  <ParticipantLocalVideo
+                                    tileId={tileId}
+                                    className ={"img-fluid_140"}
+                                    />
+                              </div>
+                            :null} */}
                           </>
                           );
                       })
-
-                      }
+                    }
                   </div>
                 </div>
               </div>

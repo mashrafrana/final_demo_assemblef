@@ -60,8 +60,6 @@ wss.on('connection', (ws, req) => {
     // For debugging, you could set this to a filename like 'test.flv', and play
     // the resulting file with VLC.
 
-//    'crf', '20',
-
     rtmpUrl 
   ]);
   
