@@ -293,7 +293,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     
   return (
       <Fragment>
-         { isHost ? <canvas id="canvas" width="900" height="350" style={{borderRadius: '20px',backgroundColor:'red', display:''}}></canvas>:null}           
+         { isHost ? <canvas id="canvas" width="900" height="350" style={{borderRadius: '20px',backgroundColor:'red', display:'none'}}></canvas>:null}           
           <div className={"DashboardMainContent"}>
               <div id="main_vdo_sec" className={"VideoSection"}>
                 <img id="logo_dp" src={logo} style={{margin: "0 20px 0 0", display: "none"}}/>
