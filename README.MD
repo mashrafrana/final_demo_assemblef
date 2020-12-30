@@ -6,10 +6,6 @@ This is the SDK react meeting demo app. It shows how to use the Amazon Chime SDK
 
 1. If you haven't already, [configure your AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html).
 
-2. Install root dependencies within the root directory: `npm install`
-
-3. Navigate to the meeting demo folder: `cd demo/meeting`
-
 4. Install dependencies: `npm install`
 
 5. Start the webpack server and node server concurrently: `npm run start`
