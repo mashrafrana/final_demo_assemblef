@@ -10,6 +10,7 @@ const routes = {
   HOME: `${rootPath}`,
   DEVICE: `${rootPath}devices`,
   MEETING: `${rootPath}meeting`,
+  VIDEO: `${rootPath}video`,
 };
 
 export default routes;

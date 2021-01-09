@@ -2,9 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import {
-  UserActivityProvider
-} from 'amazon-chime-sdk-component-library-react';
+import { UserActivityProvider } from 'amazon-chime-sdk-component-library-react';
 
 import { CustomVideoTileGrid } from '../../components/CustomVideoTileGrid';
 import { StyledLayout, StyledContent } from './Styled';
@@ -19,7 +17,6 @@ const MeetingView = () => {
   useMeetingEndRedirect();
   const { showNavbar, showRoster } = useNavigation();
 
-  
   return (
     <UserActivityProvider>
       <StyledLayout showNav={showNavbar} showRoster={showRoster}>

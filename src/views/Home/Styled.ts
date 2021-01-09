@@ -14,5 +14,6 @@ export const StyledLayout = styled.main`
     align-items: center;
     justify-content: center;
     padding: 2rem;
+    padding-top: 0rem;
   }
 `;

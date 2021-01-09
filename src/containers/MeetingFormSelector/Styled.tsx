@@ -23,6 +23,6 @@ export const StyledDiv = styled.div`
   flex: 1;
 
   @media (min-width: 600px) and (min-height: 600px) {
-    padding: 3rem 3rem 2rem;
+    padding: 1rem 3rem 2rem;
   }
 `;

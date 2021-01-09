@@ -9,14 +9,15 @@ import {
   MeetingProvider,
   NotificationProvider,
   darkTheme,
-  GlobalStyles
+  GlobalStyles,
 } from 'amazon-chime-sdk-component-library-react';
 
+import NavBar from './components/Navbar';
 import { AppStateProvider, useAppState } from './providers/AppStateProvider';
 import ErrorProvider from './providers/ErrorProvider';
 import routes from './constants/routes';
 import { NavigationProvider } from './providers/NavigationProvider';
-import { Meeting, Home, DeviceSetup } from './views';
+import { Meeting, Home, DeviceSetup, Video } from './views';
 import Notifications from './containers/Notifications';
 import NoMeetingRedirect from './containers/NoMeetingRedirect';
 import meetingConfig from './meetingConfig';
@@ -42,6 +43,7 @@ const App: FC = () => (
                       <Meeting />
                     </NoMeetingRedirect>
                   </Route>
+                  <Route exact path={routes.VIDEO} component={Video} />
                 </Switch>
               </NavigationProvider>
             </MeetingProvider>
@@ -58,6 +60,7 @@ const Theme: React.FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyles />
+      <NavBar />
       {children}
     </ThemeProvider>
   );
