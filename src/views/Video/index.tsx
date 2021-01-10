@@ -4,10 +4,16 @@
 import React from 'react';
 import { DashboardMainContent } from './Styled';
 import Sidebar from '../../components/Common/Sidebar';
+import MeetingStart from '../../components/MeetingStart';
+import ChatBox from '../../components/ChatBox';
+import RightSideBar from '../../components/Common/RightSidebar';
 
 const VideoView = () => (
   <DashboardMainContent>
     <Sidebar />
+    <MeetingStart />
+    <ChatBox />
+    <RightSideBar />
   </DashboardMainContent>
 );
 
