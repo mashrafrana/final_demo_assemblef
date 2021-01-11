@@ -10,7 +10,7 @@ import {
   AudioOutputControl,
   ControlBarButton,
   useUserActivityState,
-  Dots
+  Dots,
 } from 'amazon-chime-sdk-component-library-react';
 
 import EndMeetingControl from '../EndMeetingControl';

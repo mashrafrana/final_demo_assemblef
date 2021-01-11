@@ -20,7 +20,7 @@ const MeetingMetrics = () => {
 const BandwidthMetrics = () => {
   const {
     availableIncomingBandwidth,
-    availableOutgoingBandwidth
+    availableOutgoingBandwidth,
   } = useBandwidthMetrics();
 
   return (

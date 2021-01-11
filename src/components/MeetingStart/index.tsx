@@ -9,12 +9,18 @@ import {
   Video,
 } from './Styled';
 import VideoPlaceHolder from '../../static/assets/images/video-placeholder.jpg';
+import { CustomVideoTileGrid } from '../CustomVideoTileGrid';
+import MeetingDetails from '../../containers/MeetingDetails';
 
 const VideoContainer = () => (
   <div>
     <VideoSection>
       <MainVideoWrapper>
-        <Video>
+        <CustomVideoTileGrid
+          className="videos"
+          noRemoteVideoView={<MeetingDetails />}
+        />
+        {/* <Video>
           <img src={VideoPlaceHolder} alt="img" className="img-fluid" />
         </Video>
         <MainVideoFourPerson>
@@ -30,15 +36,15 @@ const VideoContainer = () => (
           <Video>
             <img src={VideoPlaceHolder} alt="img" className="img-fluid" />
           </Video>
-        </MainVideoFourPerson>
+        </MainVideoFourPerson> */}
       </MainVideoWrapper>
     </VideoSection>
-    <VideoMembersBottom>
+    {/* <VideoMembersBottom>
       <img src={VideoPlaceHolder} alt="img" className="img-fluid" width="100" />
       <img src={VideoPlaceHolder} alt="img" className="img-fluid" width="100" />
       <img src={VideoPlaceHolder} alt="img" className="img-fluid" width="100" />
       <img src={VideoPlaceHolder} alt="img" className="img-fluid" width="100" />
-    </VideoMembersBottom>
+    </VideoMembersBottom> */}
   </div>
 );
 

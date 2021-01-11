@@ -11,12 +11,14 @@ import {
 } from './Styled';
 import UserImg from '../../static/assets/images/user.png';
 import SearchImg from '../../static/assets/images/search.png';
+import MeetingRoster from '../../containers/MeetingRoster';
 
-const ChatBox = () => (
+const ChatBox = ({ showRoster }) => (
   <Fragment>
     <RightSideBarContainer>
       <ChatBoxContainer>
-        <RightSideBarContainerSearch>
+        {showRoster ? <MeetingRoster /> : null}
+        {/* <RightSideBarContainerSearch>
           <input type="text" placeholder="search" />
           <img src={SearchImg} alt="search-img" width="12" />
         </RightSideBarContainerSearch>
@@ -55,7 +57,7 @@ const ChatBox = () => (
             <ChatBoxPara>Alia Isfahan</ChatBoxPara>
             <ChatBoxSpan>I can help you funding</ChatBoxSpan>
           </ChatMessage>
-        </ChatBoxDiv>
+        </ChatBoxDiv> */}
       </ChatBoxContainer>
     </RightSideBarContainer>
   </Fragment>

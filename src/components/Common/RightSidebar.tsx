@@ -4,21 +4,23 @@ import { NavDiv, NavUl, NavPara } from './Styled';
 import ChatImg from '../../static/assets/images/chat.png';
 import PeopleImg from '../../static/assets/images/people.png';
 import StudioImg from '../../static/assets/images/studio.png';
+import NavigationControl from '../../containers/Navigation/NavigationControl';
 
 const RightSideBar = () => (
   <Fragment>
     <NavDiv>
-      <NavUl>
+      <NavigationControl />
+      {/* <NavUl>
         <li>
           <a href="/">
             <img src={ChatImg} alt="live" width="35" />
-            <NavPara>Studio</NavPara>
+            <NavPara>Chat</NavPara>
           </a>
         </li>
         <li>
           <a href="/">
             <img src={PeopleImg} alt="live" width="35" />
-            <NavPara>Studio</NavPara>
+            <NavPara>People</NavPara>
           </a>
         </li>
         <li>
@@ -27,7 +29,7 @@ const RightSideBar = () => (
             <NavPara>Studio</NavPara>
           </a>
         </li>
-      </NavUl>
+      </NavUl> */}
     </NavDiv>
   </Fragment>
 );
