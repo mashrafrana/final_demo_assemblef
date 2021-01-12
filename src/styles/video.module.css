@@ -4,6 +4,12 @@
   border-radius: 20px;
 }
 
+.VideoSectionEmpty {
+  background: #1e1e1e;
+  padding: 50px;
+  border-radius: 20px;
+}
+
 .MainVideoWrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;

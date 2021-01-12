@@ -295,7 +295,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       <Fragment>
          { isHost ? <canvas id="canvas" width="900" height="350" style={{borderRadius: '20px',backgroundColor:'red', display:'none'}}></canvas>:null}           
           <div className={"DashboardMainContent"}>
-              <div id="main_vdo_sec" className={"VideoSection"}>
+              <div id="main_vdo_sec" className={attendeeIdList.length == 0 ? "VideoSection" : "VideoSectionEmpty"}>
                 <img id="logo_dp" src={logo} style={{margin: "0 20px 0 0", display: "none"}}/>
                 <div className={"MainVideoWrapper"}>
                   <div className={"Video"}>
@@ -385,7 +385,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                         nameplate={"Me"}
                         className={"img-fluid_140"}
                     />
-                   {isHost ? <input type="button" value="off" style={{width : "100px",height:'40px'}} 
+                   {isHost ? <input type="button" value={attendeeIdList.length == 0 ? "On Video" : "Off Video"} style={{width : "100px",height:'40px'}} 
                               onClick={() =>{
                                 addLocalVideo();  
                                 }} /> : null }
