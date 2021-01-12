@@ -390,46 +390,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                                 addLocalVideo();  
                                 }} /> : null }
               </div>
-            { isHost ?
-             tiles.map(tileId => {               
-                        const attendee = roster[tileIdToAttendeeId[tileId]] || {};
-                        const { name }: any = attendee;
-                        return (
-                          <div key={tileId} className={"Video"}>
-                              
-                              <RemoteVideo
-                                tileId={tileId}
-                                name={name}
-                                className={"img-fluid_140"}
-                                key={tileId}
-                              />
-                              {isHost ?<input type="button" value={tileId} style={{width : "100px",height:'40px'}} 
-                              onClick={() =>{
-                                videoHandler(tileId);  
-                                }} ></input>:null}
-                          </div>
-                        );
-            }):null}
             </div>
-              { isHost ?
-                  <>
-                  <div style={{display: 'grid', gridColumnGap: '60px',gridTemplateColumns: '75px 75px',gridTemplateRows: '20px', padding: '90px 0 0 0'}}>
-                      <img onClick={fbGoLive} src={fblive} width="100px" height="40px"/>
-                      <img src={logo} id="af_logo" onClick={() => toggleLogo()}/>
-                   </div>   
-                  <div style={{marginTop : '30px' , display: 'grid', gridColumnGap: '20px',gridTemplateColumns: '5px 5px 5px 5px 5px 5px',gridTemplateRows: '20px', padding: '10px 0 0 0'}}>
-                  <div onClick={() => changeFillStyle('#FFF000')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'yellow' }}></div>
-                  <div onClick={() => changeFillStyle('#000000')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'black' }}></div>
-                  <div onClick={() => changeFillStyle('#FFFFFF')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'white' }}></div>
-                  <div onClick={() => changeFillStyle('#FCAB86')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'#FCAB86' }}></div>
-                  <div onClick={() => changeFillStyle('#FFE087')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'#FFE087' }}></div>
-                  <div onClick={() => changeFillStyle('#00FF98')} className={"yellow"} style={{border: 'solid 1px', width: '20px', height: '20px', backgroundColor:'#00FF98' }}></div>
-                </div>
-                </>: null
-              }
-              <input type='hidden' id='logo'></input>
-              <input type='hidden' id='color'></input>
-               
           </div>  
 
       </Fragment>

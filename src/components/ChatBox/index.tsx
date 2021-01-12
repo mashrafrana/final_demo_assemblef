@@ -12,12 +12,14 @@ import {
 import UserImg from '../../static/assets/images/user.png';
 import SearchImg from '../../static/assets/images/search.png';
 import MeetingRoster from '../../containers/MeetingRoster';
+import { EditVideoGrid } from '../EditVideoGrid';
 
 const ChatBox = ({ showRoster }) => (
   <Fragment>
     <RightSideBarContainer>
       <ChatBoxContainer>
         {showRoster ? <MeetingRoster /> : null}
+        <EditVideoGrid className="videos" />
         {/* <RightSideBarContainerSearch>
           <input type="text" placeholder="search" />
           <img src={SearchImg} alt="search-img" width="12" />
