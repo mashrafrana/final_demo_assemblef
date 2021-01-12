@@ -4,14 +4,13 @@
 import styled from 'styled-components';
 
 export const VideoSection = styled.div`
-  background: #1e1e1e;
   padding: 50px;
   border-radius: 20px;
 `;
 
 export const MainVideoWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   text-align: center;
   grid-gap: 20px;
 `;
