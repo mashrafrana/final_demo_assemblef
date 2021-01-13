@@ -4,34 +4,38 @@ import { NavDiv, NavUl, NavPara } from './Styled';
 import ChatImg from '../../static/assets/images/chat.png';
 import PeopleImg from '../../static/assets/images/people.png';
 import StudioImg from '../../static/assets/images/studio.png';
-import NavigationControl from '../../containers/Navigation/NavigationControl';
+import ThemeImg from '../../static/assets/images/theme.png';
 
-const RightSideBar = () => (
-  <Fragment>
-    <NavDiv>
-      <NavigationControl />
-      {/* <NavUl>
-        <li>
-          <a href="/">
-            <img src={ChatImg} alt="live" width="35" />
-            <NavPara>Chat</NavPara>
-          </a>
-        </li>
-        <li>
-          <a href="/">
-            <img src={PeopleImg} alt="live" width="35" />
+import { useNavigation } from '../../providers/NavigationProvider';
+import { useAppState } from '../../providers/AppStateProvider';
+
+const RightSideBar = () => {
+  const { toggleRoster, toggleMetrics, closeNavbar } = useNavigation();
+  const { theme, toggleTheme } = useAppState();
+  return (
+    <Fragment>
+      <NavDiv>
+        <NavUl>
+          <li onClick={toggleRoster}>
+            <img src={PeopleImg} alt="people" width="35" />
             <NavPara>People</NavPara>
-          </a>
-        </li>
-        <li>
-          <a href="/">
+          </li>
+          <li>
+            <img src={ChatImg} alt="chat" width="35" />
+            <NavPara>Chat</NavPara>
+          </li>
+          <li onClick={toggleTheme}>
+            <img src={ThemeImg} alt="theme" width="35" />
+            <NavPara>Theme</NavPara>
+          </li>
+          <li>
             <img src={StudioImg} alt="live" width="35" />
             <NavPara>Studio</NavPara>
-          </a>
-        </li>
-      </NavUl> */}
-    </NavDiv>
-  </Fragment>
-);
+          </li>
+        </NavUl>
+      </NavDiv>
+    </Fragment>
+  );
+};
 
 export default RightSideBar;
