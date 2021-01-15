@@ -9,15 +9,15 @@ const uuid = require('uuid/v4');
 const AWS = require('aws-sdk');
 /* eslint-enable */
 
-let hostname = '127.0.0.1';
-let port = 8080;
-let protocol = 'http';
-let options = {};
+const hostname = '127.0.0.1';
+const port = 8080;
+const protocol = 'http';
+const options = {};
 
 const chime = new AWS.Chime({ region: 'us-east-1' });
 const alternateEndpoint = process.env.ENDPOINT;
 if (alternateEndpoint) {
-  console.log('Using endpoint: ' + alternateEndpoint);
+  console.log(`Using endpoint: ${alternateEndpoint}`);
   chime.createMeeting({ ClientRequestToken: uuid() }, () => {});
   AWS.NodeHttpClient.sslAgent.options.rejectUnauthorized = false;
   chime.endpoint = new AWS.Endpoint(alternateEndpoint);
@@ -55,16 +55,16 @@ const server = require(protocol).createServer(
         request.method === 'POST' &&
         request.url.startsWith('/join?')
       ) {
-        const query = url.parse(request.url, true).query;
-        const title = query.title;
-        const name = query.name;
+        const { query } = url.parse(request.url, true);
+        const { title } = query;
+        const { name } = query;
         const region = query.region || 'us-east-1';
         let host = false;
         if (!meetingCache[title]) {
           meetingCache[title] = await chime
             .createMeeting({
               ClientRequestToken: uuid(),
-              MediaRegion: region
+              MediaRegion: region,
             })
             .promise();
           attendeeCache[title] = {};
@@ -78,12 +78,12 @@ const server = require(protocol).createServer(
               await chime
                 .createAttendee({
                   MeetingId: meetingCache[title].Meeting.MeetingId,
-                  ExternalUserId: uuid()
+                  ExternalUserId: uuid(),
                 })
                 .promise()
             ).Attendee,
-            host: host
-          }
+            host,
+          },
         };
         attendeeCache[title][joinInfo.JoinInfo.Attendee.AttendeeId] = name;
         response.statusCode = 201;
@@ -95,12 +95,12 @@ const server = require(protocol).createServer(
         request.method === 'GET' &&
         request.url.startsWith('/attendee?')
       ) {
-        const query = url.parse(request.url, true).query;
+        const { query } = url.parse(request.url, true);
         const attendeeInfo = {
           AttendeeInfo: {
             AttendeeId: query.attendee,
-            Name: attendeeCache[query.title][query.attendee]
-          }
+            Name: attendeeCache[query.title][query.attendee],
+          },
         };
         response.statusCode = 200;
         response.setHeader('Content-Type', 'application/json');
@@ -111,12 +111,12 @@ const server = require(protocol).createServer(
         request.method === 'POST' &&
         request.url.startsWith('/meeting?')
       ) {
-        const query = url.parse(request.url, true).query;
-        const title = query.title;
+        const { query } = url.parse(request.url, true);
+        const { title } = query;
         if (!meetingCache[title]) {
           meetingCache[title] = await chime
             .createMeeting({
-              ClientRequestToken: uuid()
+              ClientRequestToken: uuid(),
               // NotificationsConfiguration: {
               //   SqsQueueArn: 'Paste your arn here',
               //   SnsTopicArn: 'Paste your arn here'
@@ -128,8 +128,8 @@ const server = require(protocol).createServer(
         const joinInfo = {
           JoinInfo: {
             Title: title,
-            Meeting: meetingCache[title].Meeting
-          }
+            Meeting: meetingCache[title].Meeting,
+          },
         };
         response.statusCode = 201;
         response.setHeader('Content-Type', 'application/json');
@@ -137,11 +137,11 @@ const server = require(protocol).createServer(
         response.end();
         log(JSON.stringify(joinInfo, null, 2));
       } else if (request.method === 'POST' && request.url.startsWith('/end?')) {
-        const query = url.parse(request.url, true).query;
-        const title = query.title;
+        const { query } = url.parse(request.url, true);
+        const { title } = query;
         await chime
           .deleteMeeting({
-            MeetingId: meetingCache[title].Meeting.MeetingId
+            MeetingId: meetingCache[title].Meeting.MeetingId,
           })
           .promise();
         response.statusCode = 200;
