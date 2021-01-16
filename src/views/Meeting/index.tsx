@@ -15,14 +15,14 @@ import RightSideBar from '../../components/Common/RightSidebar';
 
 const MeetingView = () => {
   useMeetingEndRedirect();
-  const { showNavbar, showRoster } = useNavigation();
+  const { showRoster } = useNavigation();
 
   return (
     <UserActivityProvider>
       <DashboardMainContent>
         <Sidebar />
         <MeetingStart />
-        <ChatBox showNavbar={showNavbar} showRoster={showRoster} />
+        <ChatBox showRoster={showRoster} />
         <RightSideBar />
       </DashboardMainContent>
       <MeetingControls />

@@ -3,20 +3,17 @@
 
 import React, { useState, Fragment } from 'react';
 import {
-  //     VideoGrid,
-  LocalVideo,
   //     FeaturedRemoteVideos,
   RemoteVideo,
   //     ContentShare,
   useRemoteVideoTileState,
   useRosterState,
   useMeetingManager,
-  useAudioVideo,
 } from 'amazon-chime-sdk-component-library-react';
 import { useAppState } from '../../providers/AppStateProvider';
 // import vp from  "./video-placeholder.jpg";
-import fblive from './fblive.png';
-import logo from './assemblyf.png';
+// /import fblive from './fblive.png';
+// import logo from './assemblyf.png';
 
 export const EditVideoGrid: React.FC<Props> = () => {
   const { tiles, tileIdToAttendeeId } = useRemoteVideoTileState();
@@ -203,8 +200,8 @@ export const EditVideoGrid: React.FC<Props> = () => {
               padding: '90px 0 0 0',
             }}
           >
-            <img onClick={fbGoLive} src={fblive} width="100px" height="40px" />
-            <img src={logo} id="af_logo" onClick={() => toggleLogo()} />
+            {/* <img onClick={fbGoLive} src={fblive} width="100px" height="40px" /> */}
+            {/* <img src={logo} id="af_logo" onClick={() => toggleLogo()} /> */}
           </div>
           <div
             style={{
