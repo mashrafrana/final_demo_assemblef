@@ -18,7 +18,7 @@ import {
 import { useAppState } from '../../providers/AppStateProvider';
 // import vp from  "./video-placeholder.jpg";
 import ParticipantLocalVideo from '../ParticipantLocalVideo';
-//import logo from "./assemblyf.png";
+import logo from "./assemblyf.png";
 
 
 export interface BaseSdkProps {
@@ -293,7 +293,6 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
          { isHost ? <canvas id="canvas" width="900" height="350" style={{borderRadius: '20px',backgroundColor:'red', display:'none'}}></canvas>:null}           
           <div className={"DashboardMainContent"}>
               <div id="main_vdo_sec" className={attendeeIdList.length == 0 ? "VideoSection" : "VideoSectionEmpty"}>
-                {/* <img id="logo_dp" src={logo} style={{margin: "0 20px 0 0", display: "none"}}/> */}
                 <div className={"MainVideoWrapper"}>
                   <div className={"Video"}>
                       {attendeeIdList.includes(tileIdToAttendeeId[featureTileId])?
@@ -376,6 +375,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                   </div>
                 </div>
               </div>
+              <img id="logo_dp" src={logo} style={{margin: "0 20px 0 0", display: "none", float: "right"}}/>
             <div className={"videoMembersBottom"}>              
               <div>
                 <LocalVideo
