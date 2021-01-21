@@ -4,7 +4,6 @@
 import styled from 'styled-components';
 
 export const VideoSection = styled.div`
-  padding: 50px;
   border-radius: 20px;
 `;
 

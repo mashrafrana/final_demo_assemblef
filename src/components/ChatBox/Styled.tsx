@@ -8,6 +8,7 @@ export const NavDiv = styled.nav`
   transition: 350ms;
   position: relative;
   text-align: center;
+  border-left: 1px solid #eee;
 `;
 
 export const NavUl = styled.ul`

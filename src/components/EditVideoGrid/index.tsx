@@ -14,8 +14,9 @@ import { useAppState } from '../../providers/AppStateProvider';
 // import vp from  "./video-placeholder.jpg";
 import fblive from './fblive.png';
 import logo from './assemblyf.png';
+import { AddLogo } from './Styled';
 
-export const EditVideoGrid: React.FC<Props> = () => {
+export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
   const { tiles, tileIdToAttendeeId } = useRemoteVideoTileState();
   const { roster } = useRosterState();
   const meetingManager = useMeetingManager();
@@ -162,7 +163,7 @@ export const EditVideoGrid: React.FC<Props> = () => {
   return (
     <Fragment>
       <div className="videoMembersBottom">
-        {isHost
+        {isHost && !isSetting
           ? tiles.map(tileId => {
               const attendee = roster[tileIdToAttendeeId[tileId]] || {};
               const { name }: any = attendee;
@@ -189,90 +190,108 @@ export const EditVideoGrid: React.FC<Props> = () => {
             })
           : null}
       </div>
-      {isHost ? (
+      {isHost && isSetting ? (
         <>
           <div
             style={{
-              display: 'grid',
-              gridColumnGap: '60px',
               gridTemplateColumns: '75px 75px',
               gridTemplateRows: '20px',
-              padding: '90px 0 0 0',
+              padding: '0px 0 0 0',
             }}
           >
-            <img onClick={fbGoLive} src={fblive} width="100px" height="40px" />
-            <img src={logo} id="af_logo" onClick={() => toggleLogo()} />
-          </div>
-          <div
-            style={{
-              marginTop: '30px',
-              display: 'grid',
-              gridColumnGap: '20px',
-              gridTemplateColumns: '5px 5px 5px 5px 5px 5px',
-              gridTemplateRows: '20px',
-              padding: '10px 0 0 0',
-            }}
-          >
-            <div
-              onClick={() => changeFillStyle('#FFF000')}
-              className="yellow"
-              style={{
-                border: 'solid 1px',
-                width: '20px',
-                height: '20px',
-                backgroundColor: 'yellow',
-              }}
-            ></div>
-            <div
-              onClick={() => changeFillStyle('#000000')}
-              className="yellow"
-              style={{
-                border: 'solid 1px',
-                width: '20px',
-                height: '20px',
-                backgroundColor: 'black',
-              }}
-            ></div>
-            <div
-              onClick={() => changeFillStyle('#FFFFFF')}
-              className="yellow"
-              style={{
-                border: 'solid 1px',
-                width: '20px',
-                height: '20px',
-                backgroundColor: 'white',
-              }}
-            ></div>
-            <div
-              onClick={() => changeFillStyle('#FCAB86')}
-              className="yellow"
-              style={{
-                border: 'solid 1px',
-                width: '20px',
-                height: '20px',
-                backgroundColor: '#FCAB86',
-              }}
-            ></div>
-            <div
-              onClick={() => changeFillStyle('#FFE087')}
-              className="yellow"
-              style={{
-                border: 'solid 1px',
-                width: '20px',
-                height: '20px',
-                backgroundColor: '#FFE087',
-              }}
-            ></div>
-            <div
-              onClick={() => changeFillStyle('#00FF98')}
-              className="yellow"
-              style={{
-                border: 'solid 1px',
-                width: '20px',
-                height: '20px',
-                backgroundColor: '#00FF98',
-              }}
-            ></div>
+            <AddLogo>
+              <h4>Add logo</h4>
+              <img src={logo} id="af_logo" onClick={() => toggleLogo()} />
+              <hr />
+            </AddLogo>
+
+            <AddLogo>
+              <h4>Choose Background</h4>
+              <div
+                style={{
+                  display: 'grid',
+                  gridColumnGap: '20px',
+                  gridTemplateColumns: '20px 20px 20px 20px 20px 20px',
+                  gridTemplateRows: '20px',
+                  padding: '10px 0 0 0',
+                }}
+              >
+                <div
+                  onClick={() => changeFillStyle('#FFF000')}
+                  className="yellow"
+                  style={{
+                    border: 'solid 1px',
+                    width: '30px',
+                    height: '30px',
+                    backgroundColor: 'yellow',
+                  }}
+                ></div>
+                <div
+                  onClick={() => changeFillStyle('#000000')}
+                  className="yellow"
+                  style={{
+                    border: 'solid 1px',
+                    width: '30px',
+                    height: '30px',
+                    backgroundColor: 'black',
+                  }}
+                ></div>
+                <div
+                  onClick={() => changeFillStyle('#FFFFFF')}
+                  className="yellow"
+                  style={{
+                    border: 'solid 1px',
+                    width: '30px',
+                    height: '30px',
+                    backgroundColor: 'white',
+                  }}
+                ></div>
+                <div
+                  onClick={() => changeFillStyle('#FCAB86')}
+                  className="yellow"
+                  style={{
+                    border: 'solid 1px',
+                    width: '30px',
+                    height: '30px',
+                    backgroundColor: '#FCAB86',
+                  }}
+                ></div>
+                <div
+                  onClick={() => changeFillStyle('#FFE087')}
+                  className="yellow"
+                  style={{
+                    border: 'solid 1px',
+                    width: '30px',
+                    height: '30px',
+                    backgroundColor: '#FFE087',
+                  }}
+                ></div>
+                <div
+                  onClick={() => changeFillStyle('#00FF98')}
+                  className="yellow"
+                  style={{
+                    border: 'solid 1px',
+                    width: '30px',
+                    height: '30px',
+                    backgroundColor: '#00FF98',
+                  }}
+                ></div>
+              </div>
+            </AddLogo>
+            <AddLogo>
+              <h4>Facebook Go Live</h4>
+              <img
+                onClick={fbGoLive}
+                src={fblive}
+                width="100px"
+                height="40px"
+              />
+              <hr />
+            </AddLogo>
+            <AddLogo>
+              <h4>Text</h4>
+              <input type="text" />
+            </AddLogo>
           </div>
         </>
       ) : null}
