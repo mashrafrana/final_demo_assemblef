@@ -18,7 +18,7 @@ import {
 import { useAppState } from '../../providers/AppStateProvider';
 // import vp from  "./video-placeholder.jpg";
 import ParticipantLocalVideo from '../ParticipantLocalVideo';
-import logo from "./assemblyf.png";
+import logo from "./logo.png";
 
 
 export interface BaseSdkProps {
@@ -375,7 +375,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                   </div>
                 </div>
               </div>
-              <img id="logo_dp" src={logo} style={{margin: "0 20px 0 0", display: "none", float: "right"}}/>
+              <img id="logo_dp" src={logo} style={{margin: "-56px 20px 0px 17px", display: "none", float: "right", width: "130px"}}/>
             <div className={"videoMembersBottom"}>              
               <div>
                 <LocalVideo

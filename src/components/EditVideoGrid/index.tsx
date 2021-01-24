@@ -13,7 +13,7 @@ import {
 import { useAppState } from '../../providers/AppStateProvider';
 // import vp from  "./video-placeholder.jpg";
 import fblive from './fblive.png';
-import logo from './assemblyf.png';
+import logo from './logo.png';
 import { AddLogo } from './Styled';
 
 export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
@@ -64,66 +64,66 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
   };
 
   const fbGoLive = () => {
-    // FB.ui(
-    //   {
-    //     display: 'popup',
-    //     method: 'live_broadcast',
-    //     phase: 'create',
-    //   },
-    //   createRes => {
-    //     let mediaRecorder;
-    //     let mediaStream;
-    //     FB.ui(
-    //       {
-    //         display: 'popup',
-    //         method: 'live_broadcast',
-    //         phase: 'publish',
-    //         broadcast_data: createRes,
-    //       },
-    //       publishRes => {
-    //         console.log(publishRes);
-    //       }
-    //     );
-    //     const ws = new WebSocket(
-    //       `${window.location.origin.replace(
-    //         'http',
-    //         'ws'
-    //       )}/rtmp/${encodeURIComponent(createRes.stream_url)}`
-    //     );
-    //     ws.addEventListener('open', e => {
-    //       console.log('WebSocket Open', e);
-    //       mediaStream = document.querySelector('canvas').captureStream(60); // 30 FPS
-    //       const AudioContext = window.AudioContext || window.webkitAudioContext;
-    //       const audioCtx = new AudioContext();
-    //       const dest = audioCtx.createMediaStreamDestination();
-    //       const localAudioStream: any =
-    //         audioVideo.realtimeController.state.audioInput;
-    //       const localAudio = audioCtx.createMediaStreamSource(localAudioStream);
-    //       localAudio.connect(dest);
-    //       const audio: any = audioVideo.audioMixController.audioStream;
-    //       if (audio) {
-    //         const partAudio = audioCtx.createMediaStreamSource(audio);
-    //         partAudio.connect(dest);
-    //       }
-    //       if (dest.stream.getAudioTracks().length > 0) {
-    //         mediaStream.addTrack(dest.stream.getAudioTracks()[0]);
-    //       }
-    //       mediaRecorder = new MediaRecorder(mediaStream, {
-    //         mimeType: 'video/webm;codecs=h264',
-    //         videoBitsPerSecond: 3000000,
-    //       });
-    //       mediaRecorder.addEventListener('dataavailable', e => {
-    //         ws.send(e.data);
-    //       });
-    //       mediaRecorder.addEventListener('stop', ws.close.bind(ws));
-    //       mediaRecorder.start(1000); // Start recording, and dump data every second
-    //     });
-    //     ws.addEventListener('close', e => {
-    //       console.log('WebSocket Close', e);
-    //       mediaRecorder.stop();
-    //     });
-    //   }
-    // );
+    FB.ui(
+      {
+        display: 'popup',
+        method: 'live_broadcast',
+        phase: 'create',
+      },
+      createRes => {
+        let mediaRecorder;
+        let mediaStream;
+        FB.ui(
+          {
+            display: 'popup',
+            method: 'live_broadcast',
+            phase: 'publish',
+            broadcast_data: createRes,
+          },
+          publishRes => {
+            console.log(publishRes);
+          }
+        );
+        const ws = new WebSocket(
+          `${window.location.origin.replace(
+            'http',
+            'ws'
+          )}/rtmp/${encodeURIComponent(createRes.stream_url)}`
+        );
+        ws.addEventListener('open', e => {
+          console.log('WebSocket Open', e);
+          mediaStream = document.querySelector('canvas').captureStream(60); // 30 FPS
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          const audioCtx = new AudioContext();
+          const dest = audioCtx.createMediaStreamDestination();
+          const localAudioStream: any =
+            audioVideo.realtimeController.state.audioInput;
+          const localAudio = audioCtx.createMediaStreamSource(localAudioStream);
+          localAudio.connect(dest);
+          const audio: any = audioVideo.audioMixController.audioStream;
+          if (audio) {
+            const partAudio = audioCtx.createMediaStreamSource(audio);
+            partAudio.connect(dest);
+          }
+          if (dest.stream.getAudioTracks().length > 0) {
+            mediaStream.addTrack(dest.stream.getAudioTracks()[0]);
+          }
+          mediaRecorder = new MediaRecorder(mediaStream, {
+            mimeType: 'video/webm;codecs=h264',
+            videoBitsPerSecond: 3000000,
+          });
+          mediaRecorder.addEventListener('dataavailable', e => {
+            ws.send(e.data);
+          });
+          mediaRecorder.addEventListener('stop', ws.close.bind(ws));
+          mediaRecorder.start(1000); // Start recording, and dump data every second
+        });
+        ws.addEventListener('close', e => {
+          console.log('WebSocket Close', e);
+          mediaRecorder.stop();
+        });
+      }
+    );
   };
   const toggleLogo = () => {
     const logo = document.getElementById('logo').value;
@@ -201,7 +201,12 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
           >
             <AddLogo>
               <h4>Add logo</h4>
-              <img src={logo} id="af_logo" onClick={() => toggleLogo()} />
+              <img
+                src={logo}
+                id="af_logo"
+                style={{ width: '130px' }}
+                onClick={() => toggleLogo()}
+              />
               <hr />
             </AddLogo>
 
