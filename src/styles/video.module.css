@@ -6,7 +6,7 @@
 
 .VideoSectionEmpty {
   background: #1e1e1e;
-  border-radius: 20px;
+  /* border-radius: 20px; */
 }
 
 .MainVideoWrapper {
@@ -14,6 +14,34 @@
   grid-template-columns: 1fr 1fr;
   text-align: center;
   grid-gap: 20px;
+}
+
+.MainVideoWrapperTwo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: center;
+  grid-gap: 5px;
+}
+
+.MainVideoWrapperOne {
+  display: grid;
+  grid-template-columns: 1fr;
+  text-align: center;
+  grid-gap: 5px;
+}
+
+.MainVideoWrapperThree {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  text-align: center;
+  grid-gap: 5px;
+}
+
+.MainVideoWrapperFour {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  text-align: center;
+  grid-gap: 5px;
 }
 
 .MainVideoFourPerson {

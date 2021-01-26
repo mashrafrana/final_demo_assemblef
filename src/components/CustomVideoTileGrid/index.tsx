@@ -249,13 +249,12 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
         }
       }
 
-      var x1 = document.querySelector(".MainVideoWrapper video");
-      video.push(x1);
-      var x2 = document.querySelectorAll(".MainVideoFourPerson Video");
+      // var x1 = document.querySelector(".MainVideoWrapper video");
+      // video.push(x1);
+      var x2 = document.querySelectorAll(".DashboardMainContent Video");
       for(let j =0; j < x2.length; j++){
         video.push(x2[j]);
       }
-      
 
       // var x3 = document.querySelectorAll("ch-video");
       // video.push(x3);
@@ -287,14 +286,29 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       // }
     }
 
+  const addClassForVideo = (videoCount) => {
+    if(videoCount === 1) {
+      return "MainVideoWrapperOne";
+    }
+    else if(videoCount === 2) {
+      return "MainVideoWrapperTwo";
+    }
+    else if(videoCount === 3) {
+      return "MainVideoWrapperThree";
+    }
+    else if(videoCount === 4) {
+      return "MainVideoWrapperFour";
+    }
+  }
+
     
   return (
       <Fragment>
          { isHost ? <canvas id="canvas" width="900" height="350" style={{borderRadius: '20px',backgroundColor:'red', display:'none'}}></canvas>:null}           
           <div className={"DashboardMainContent"}>
-              <div id="main_vdo_sec" className={attendeeIdList.length == 0 ? "VideoSection" : "VideoSectionEmpty"}>
-                <div className={"MainVideoWrapper"}>
-                  <div className={"Video"}>
+              <div id="main_vdo_sec" className={attendeeIdList.length === 0 ? "VideoSection" : "VideoSectionEmpty"}>
+                <div className={addClassForVideo(attendeeIdList.length + 1)}>
+                  {/* <div className={"Video"}>
                       {attendeeIdList.includes(tileIdToAttendeeId[featureTileId])?
                         attendeeIdList.filter(o=> o === tileIdToAttendeeId[featureTileId]).map(featureAttendeeId => {
                           return (
@@ -327,8 +341,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                           }
                         })
                       }
-                  </div>
-                  <div className={"MainVideoFourPerson"}>
+                  </div> */}
                     {attendeeIdList.filter(o=> o !== attendeeIdToTileId[featureTileId]).map(remoteAttendeeId => {
                         let tileId = attendeeIdToTileId[remoteAttendeeId];
                         const attendee = roster[tileIdToAttendeeId[tileId]] || {};
@@ -341,12 +354,12 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                                     { remoteAttendeeId === attendeeId ?
                                       <ParticipantLocalVideo
                                             tileId={localVideoTileId}
-                                            className ={"img-fluid_140"}
+                                            className ={"img-fluid_300"}
                                           />                                          
                                       :                                    
                                       <ParticipantLocalVideo
                                         tileId={tileId}
-                                        className ={"img-fluid_140"}
+                                        className ={"img-fluid_300"}
                                         />
                                     }
                                   </div>
@@ -372,7 +385,6 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                           );
                       })
                     }
-                  </div>
                 </div>
               </div>
               <img id="logo_dp" src={logo} style={{margin: "-56px 20px 0px 17px", display: "none", float: "right", width: "130px"}}/>
