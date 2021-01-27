@@ -87,10 +87,8 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     }
 
   const videoHandler = (tileId : number) => {
-    console.log(' adding ', tileId)
       let lis :any = [];  
       if(!(attendeeIdList.includes(tileIdToAttendeeId[tileId]))){
-        console.log('hahaha adding ', tileId)
         lis = [...attendeeIdList , tileIdToAttendeeId[tileId]];
         setAttendeeIdList(lis);        
       }
@@ -309,7 +307,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
          { isHost ? <canvas id="canvas" width="900" height="350" style={{borderRadius: '20px',backgroundColor:'red', display:'none'}}></canvas>:null}           
           <div className={"DashboardMainContent"}>
               <div id="main_vdo_sec" className={attendeeIdList.length === 0 ? "VideoSection" : "VideoSectionEmpty"}>
-                <div className={addClassForVideo(attendeeIdList.length + 1)}>
+                <div className={addClassForVideo(attendeeIdList.length)}>
                   {/* <div className={"Video"}>
                       {attendeeIdList.includes(tileIdToAttendeeId[featureTileId])?
                         attendeeIdList.filter(o=> o === tileIdToAttendeeId[featureTileId]).map(featureAttendeeId => {
