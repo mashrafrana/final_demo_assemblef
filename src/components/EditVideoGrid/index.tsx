@@ -162,7 +162,7 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
 
   return (
     <Fragment>
-      <div className="videoMembersBottom">
+      {/* <div className="videoMembersBottom">
         {isHost && !isSetting
           ? tiles.map(tileId => {
               const attendee = roster[tileIdToAttendeeId[tileId]] || {};
@@ -189,7 +189,7 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
               );
             })
           : null}
-      </div>
+      </div> */}
       {isHost && isSetting ? (
         <>
           <div

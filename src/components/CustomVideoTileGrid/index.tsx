@@ -13,7 +13,8 @@ import {
     useContentShareState,
     useRosterState,
     useMeetingManager,
-    useAudioVideo
+    useAudioVideo,
+    RemoteVideo
 } from 'amazon-chime-sdk-component-library-react';
 import { useAppState } from '../../providers/AppStateProvider';
 // import vp from  "./video-placeholder.jpg";
@@ -86,9 +87,10 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     }
 
   const videoHandler = (tileId : number) => {
-      
+    console.log(' adding ', tileId)
       let lis :any = [];  
       if(!(attendeeIdList.includes(tileIdToAttendeeId[tileId]))){
+        console.log('hahaha adding ', tileId)
         lis = [...attendeeIdList , tileIdToAttendeeId[tileId]];
         setAttendeeIdList(lis);        
       }
@@ -399,6 +401,33 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                                 addLocalVideo();  
                                 }} /> : null }
               </div>
+              {isHost
+            ? tiles.map(tileId => {
+              console.log('its coming... ', tileId)
+                const attendee = roster[tileIdToAttendeeId[tileId]] || {};
+                const { name }: any = attendee;
+                return (
+                  <div key={tileId} className="Video">
+                    <RemoteVideo
+                      tileId={tileId}
+                      name={name}
+                      className="img-fluid_140"
+                      key={tileId}
+                    />
+                    {isHost ? (
+                      <input
+                        type="button"
+                        value={tileId}
+                        style={{ width: '100px', height: '40px' }}
+                        onClick={() => {
+                          videoHandler(tileId);
+                        }}
+                      ></input>
+                    ) : null}
+                  </div>
+                );
+              })
+            : null}
             </div>
           </div>  
 
