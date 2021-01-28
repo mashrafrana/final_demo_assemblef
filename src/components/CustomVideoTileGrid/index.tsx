@@ -20,6 +20,8 @@ import { useAppState } from '../../providers/AppStateProvider';
 // import vp from  "./video-placeholder.jpg";
 import ParticipantLocalVideo from '../ParticipantLocalVideo';
 import logo from "./logo.png";
+import offVideoIcon from "./off-video-call.png";
+import onVideoIcon from "./on-video-call.png";
 
 
 export interface BaseSdkProps {
@@ -98,7 +100,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       }
       meetingManager.audioVideo.realtimeSendDataMessage("attendeeIdList", lis, 1000);
       console.log(attendeeIdList);
-  
+      draw();
     }
 
   const addLocalVideo = () => {      
@@ -115,7 +117,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
         }
 
       meetingManager.audioVideo.realtimeSendDataMessage("attendeeIdList", lis, 1000);
-      
+      draw();
     }
   
   const changeFillStyle = (color: string) => {
@@ -290,14 +292,11 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     if(videoCount === 1) {
       return "MainVideoWrapperOne";
     }
-    else if(videoCount === 2) {
+    else if(videoCount === 2 || videoCount === 4) {
       return "MainVideoWrapperTwo";
     }
     else if(videoCount === 3) {
       return "MainVideoWrapperThree";
-    }
-    else if(videoCount === 4) {
-      return "MainVideoWrapperFour";
     }
   }
 
@@ -392,7 +391,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
               <div>
                 <LocalVideo
                         nameplate={"Me"}
-                        className={"img-fluid_140"}
+                        className={"img-fluid_90"}
                     />
                    {isHost ? <input type="button" value={attendeeIdList.length == 0 ? "On Video" : "Off Video"} style={{width : "100px",height:'40px'}} 
                               onClick={() =>{
@@ -401,7 +400,6 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
               </div>
               {isHost
             ? tiles.map(tileId => {
-              console.log('its coming... ', tileId)
                 const attendee = roster[tileIdToAttendeeId[tileId]] || {};
                 const { name }: any = attendee;
                 return (
@@ -409,10 +407,10 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                     <RemoteVideo
                       tileId={tileId}
                       name={name}
-                      className="img-fluid_140"
+                      className="img-fluid_90"
                       key={tileId}
                     />
-                    {isHost ? (
+                    {/* {isHost ? (
                       <input
                         type="button"
                         value={tileId}
@@ -421,7 +419,14 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                           videoHandler(tileId);
                         }}
                       ></input>
-                    ) : null}
+                    ) : null} */}
+                    {isHost ? 
+                    ( attendeeIdList.length == 0 ? <img style={{width: "20px"}} src={onVideoIcon} onClick={() =>{
+                        videoHandler(tileId);  
+                      }} /> : <img style={{width: "20px"}} src={offVideoIcon} onClick={() =>{
+                        videoHandler(tileId);  
+                      }} />)
+                    : null }
                   </div>
                 );
               })

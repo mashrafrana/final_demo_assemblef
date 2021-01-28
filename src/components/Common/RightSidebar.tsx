@@ -24,10 +24,10 @@ const RightSideBar = ({ setSetting, isSetting }) => {
             <img src={ChatImg} alt="chat" width="35" />
             <NavPara>Chat</NavPara>
           </li>
-          <li onClick={toggleTheme}>
+          {/* <li onClick={toggleTheme}>
             <img src={ThemeImg} alt="theme" width="35" />
             <NavPara>Theme</NavPara>
-          </li>
+          </li> */}
           <li
             onClick={() => {
               setSetting(!isSetting);

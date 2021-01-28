@@ -17,45 +17,45 @@ import logo from './logo.png';
 import { AddLogo } from './Styled';
 
 export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
-  const { tiles, tileIdToAttendeeId } = useRemoteVideoTileState();
-  const { roster } = useRosterState();
+  // const { tiles, tileIdToAttendeeId } = useRemoteVideoTileState();
+  // const { roster } = useRosterState();
   const meetingManager = useMeetingManager();
   const { isHost, attendeeId } = useAppState();
   const [attendeeIdList, setAttendeeIdList] = useState([]);
 
-  const videoHandler = (tileId: number) => {
-    let lis: any = [];
-    if (!attendeeIdList.includes(tileIdToAttendeeId[tileId])) {
-      lis = [...attendeeIdList, tileIdToAttendeeId[tileId]];
-      setAttendeeIdList(lis);
-    } else {
-      lis = attendeeIdList.filter(o => o !== tileIdToAttendeeId[tileId]);
-      setAttendeeIdList(lis);
-    }
-    meetingManager.audioVideo.realtimeSendDataMessage(
-      'attendeeIdList',
-      lis,
-      1000
-    );
-    console.log(attendeeIdList);
-  };
+  // const videoHandler = (tileId: number) => {
+  //   let lis: any = [];
+  //   if (!attendeeIdList.includes(tileIdToAttendeeId[tileId])) {
+  //     lis = [...attendeeIdList, tileIdToAttendeeId[tileId]];
+  //     setAttendeeIdList(lis);
+  //   } else {
+  //     lis = attendeeIdList.filter(o => o !== tileIdToAttendeeId[tileId]);
+  //     setAttendeeIdList(lis);
+  //   }
+  //   meetingManager.audioVideo.realtimeSendDataMessage(
+  //     'attendeeIdList',
+  //     lis,
+  //     1000
+  //   );
+  //   console.log(attendeeIdList);
+  // };
 
-  const addLocalVideo = () => {
-    let lis: any = [];
-    if (!attendeeIdList.includes(attendeeId)) {
-      lis = [...attendeeIdList, attendeeId];
-      setAttendeeIdList(lis);
-    } else {
-      lis = attendeeIdList.filter(o => o !== attendeeId);
-      setAttendeeIdList(lis);
-    }
+  // const addLocalVideo = () => {
+  //   let lis: any = [];
+  //   if (!attendeeIdList.includes(attendeeId)) {
+  //     lis = [...attendeeIdList, attendeeId];
+  //     setAttendeeIdList(lis);
+  //   } else {
+  //     lis = attendeeIdList.filter(o => o !== attendeeId);
+  //     setAttendeeIdList(lis);
+  //   }
 
-    meetingManager.audioVideo.realtimeSendDataMessage(
-      'attendeeIdList',
-      lis,
-      1000
-    );
-  };
+  //   meetingManager.audioVideo.realtimeSendDataMessage(
+  //     'attendeeIdList',
+  //     lis,
+  //     1000
+  //   );
+  // };
 
   const changeFillStyle = (color: string) => {
     document.getElementById('main_vdo_sec').style.background = color;
@@ -210,7 +210,7 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
               <hr />
             </AddLogo>
 
-            <AddLogo>
+            {/* <AddLogo>
               <h4>Choose Background</h4>
               <div
                 style={{
@@ -282,7 +282,7 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
                   }}
                 ></div>
               </div>
-            </AddLogo>
+            </AddLogo> */}
             <AddLogo>
               <h4>Facebook Go Live</h4>
               <img
@@ -293,10 +293,10 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
               />
               <hr />
             </AddLogo>
-            <AddLogo>
+            {/* <AddLogo>
               <h4>Text</h4>
               <input type="text" />
-            </AddLogo>
+            </AddLogo> */}
           </div>
         </>
       ) : null}
