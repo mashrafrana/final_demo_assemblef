@@ -17,6 +17,7 @@ export const StyledControls = styled.div<StyledProps>`
 
   .controls-menu {
     width: 100%;
-    position: static;
+    position: fixed;
+    bottom: 0;
   }
 `;

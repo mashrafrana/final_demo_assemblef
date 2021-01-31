@@ -19,7 +19,7 @@ import {
 import { useAppState } from '../../providers/AppStateProvider';
 // import vp from  "./video-placeholder.jpg";
 import ParticipantLocalVideo from '../ParticipantLocalVideo';
-import logo from "./logo.png";
+import logo from "./logo-white.png";
 import offVideoIcon from "./off-video-call.png";
 import onVideoIcon from "./on-video-call.png";
 
@@ -292,11 +292,14 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     if(videoCount === 1) {
       return "MainVideoWrapperOne";
     }
-    else if(videoCount === 2 || videoCount === 4) {
+    else if(videoCount === 2 || videoCount === 4 || videoCount === 6) {
       return "MainVideoWrapperTwo";
     }
     else if(videoCount === 3) {
       return "MainVideoWrapperThree";
+    }
+    else if(videoCount === 5) {
+      return "MainVideoWrapperFive";
     }
   }
 
@@ -307,6 +310,9 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
           <div className={"DashboardMainContent"}>
               <div id="main_vdo_sec" className={attendeeIdList.length === 0 ? "VideoSection" : "VideoSectionEmpty"}>
                 <div className={addClassForVideo(attendeeIdList.length)}>
+                <div className="video-logo">
+                    <img id="logo_dp" src={logo} style={{width: "130px"}} /> 
+                </div>
                   {/* <div className={"Video"}>
                       {attendeeIdList.includes(tileIdToAttendeeId[featureTileId])?
                         attendeeIdList.filter(o=> o === tileIdToAttendeeId[featureTileId]).map(featureAttendeeId => {
@@ -386,7 +392,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                     }
                 </div>
               </div>
-              <img id="logo_dp" src={logo} style={{margin: "-56px 20px 0px 17px", display: "none", float: "right", width: "130px"}}/>
+              
             <div className={"videoMembersBottom"}>              
               <div>
                 <LocalVideo
@@ -421,12 +427,13 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                       ></input>
                     ) : null} */}
                     {isHost ? 
-                    ( attendeeIdList.length == 0 ? <img style={{width: "20px"}} src={onVideoIcon} onClick={() =>{
+                    ( attendeeIdList.length == 0 ? <div onClick={() =>{
+                      videoHandler(tileId);  
+                    }}><img style={{width: "13px"}} src={onVideoIcon}  />Toggle Video</div> : <div><img style={{width: "13px"}} src={offVideoIcon} onClick={() =>{
                         videoHandler(tileId);  
-                      }} /> : <img style={{width: "20px"}} src={offVideoIcon} onClick={() =>{
-                        videoHandler(tileId);  
-                      }} />)
+                      }} />Toggle Video</div>)
                     : null }
+                    
                   </div>
                 );
               })

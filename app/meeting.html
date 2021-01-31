@@ -44,12 +44,17 @@
         background: #1e1e1e;
         padding: 150px;
         border-radius: 20px;
+        position: relative;
       }
       .VideoSectionEmpty {
         background: #1e1e1e;
         /* border-radius: 20px; */
+        position: relative;
       }
-
+      .controls-menu {
+        position: fixed;
+        bottom: 0;
+      }
       .MainVideoWrapper {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -61,28 +66,40 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         text-align: center;
-        grid-gap: 5px;
+        grid-gap: 0px;
       }
 
       .MainVideoWrapperOne {
         display: grid;
         grid-template-columns: 1fr;
         text-align: center;
-        grid-gap: 5px;
+        grid-gap: 0px;
       }
 
       .MainVideoWrapperThree {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         text-align: center;
-        grid-gap: 5px;
+        grid-gap: 0px;
+      }
+      .MainVideoWrapperThree {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        text-align: center;
+        grid-gap: 0px;
       }
 
       .MainVideoWrapperFour {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
         text-align: center;
-        grid-gap: 5px;
+        grid-gap: 0px;
+      }
+
+      .video-logo {
+        position: absolute;
+        right: 10px;
+        bottom: 20px;
       }
 
       .MainVideoFourPerson {

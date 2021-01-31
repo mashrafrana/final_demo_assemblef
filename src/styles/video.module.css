@@ -2,6 +2,7 @@
   background: #1e1e1e;
   padding: 150px;
   border-radius: 20px;
+  position: relative;
 }
 
 .VideoSectionEmpty {
@@ -20,28 +21,34 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   text-align: center;
-  grid-gap: 5px;
+  grid-gap: 0px;
 }
 
 .MainVideoWrapperOne {
   display: grid;
   grid-template-columns: 1fr;
   text-align: center;
-  grid-gap: 5px;
+  grid-gap: 0px;
 }
 
 .MainVideoWrapperThree {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   text-align: center;
-  grid-gap: 5px;
+  grid-gap: 0px;
 }
 
-.MainVideoWrapperFour {
+.video-logo {
+  position: absolute;
+  right: 10px;
+  bottom: 20px;
+}
+
+.MainVideoWrapperFive {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   text-align: center;
-  grid-gap: 5px;
+  grid-gap: 0px;
 }
 
 .MainVideoFourPerson {
