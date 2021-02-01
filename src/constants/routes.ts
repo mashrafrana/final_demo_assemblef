@@ -7,7 +7,7 @@ export const rootPath: string = window.location.href.includes(awsPath)
   : '/';
 
 const routes = {
-  HOME: `http://live.assemblyf.com/`,
+  HOME: `${rootPath}`,
   DEVICE: `${rootPath}devices`,
   MEETING: `${rootPath}meeting`,
   VIDEO: `${rootPath}video`,
