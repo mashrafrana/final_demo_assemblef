@@ -92,5 +92,6 @@ module.exports = {
       'subdomain2.host.com',
       'host2.com',
     ],
+    disableHostCheck: true,
   },
 };
