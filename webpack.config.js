@@ -78,6 +78,7 @@ module.exports = {
     contentBase: path.join(__dirname, 'dist'),
     index: `${app}.html`,
     compress: true,
+    public: 'store-client-nestroia1.c9users.io',
     liveReload: true,
     hot: false,
     host: '0.0.0.0',
@@ -85,5 +86,11 @@ module.exports = {
     https: true,
     historyApiFallback: true,
     writeToDisk: true,
+    allowedHosts: [
+      'host.com',
+      'subdomain.host.com',
+      'subdomain2.host.com',
+      'host2.com',
+    ],
   },
 };
