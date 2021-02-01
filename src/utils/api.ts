@@ -18,7 +18,7 @@ export async function fetchMeeting(
   region: string
 ): Promise<MeetingResponse> {
   const response = await fetch(
-    `https://live.assemblyf.com/join?title=${encodeURIComponent(
+    `${BASE_URL}join?title=${encodeURIComponent(
       meetingId
     )}&name=${encodeURIComponent(name)}${
       region ? `&region=${encodeURIComponent(region)}` : ''
