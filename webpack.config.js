@@ -81,7 +81,7 @@ module.exports = {
     liveReload: true,
     hot: false,
     host: '0.0.0.0',
-    port: 9000,
+    port: 2053,
     https: true,
     historyApiFallback: true,
     writeToDisk: true,
