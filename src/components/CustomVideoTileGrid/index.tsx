@@ -359,12 +359,12 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                                     { remoteAttendeeId === attendeeId ?
                                       <ParticipantLocalVideo
                                             tileId={localVideoTileId}
-                                            className ={"img-fluid_300"}
+                                            className ={"img-fluid_360"}
                                           />                                          
                                       :                                    
                                       <ParticipantLocalVideo
                                         tileId={tileId}
-                                        className ={"img-fluid_300"}
+                                        className ={"img-fluid_360"}
                                         />
                                     }
                                   </div>
@@ -399,10 +399,11 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                         nameplate={"Me"}
                         className={"img-fluid_90"}
                     />
-                   {isHost ? <input type="button" value={attendeeIdList.length == 0 ? "On Video" : "Off Video"} style={{width : "100px",height:'40px'}} 
-                              onClick={() =>{
-                                addLocalVideo();  
-                                }} /> : null }
+                   {isHost ? 
+                   <div className="videoToggle" onClick={() =>{
+                    addLocalVideo();  
+                  }}><img style={{width: "18px"}} src={offVideoIcon}  /></div>
+                    : null }
               </div>
               {isHost
             ? tiles.map(tileId => {
@@ -427,11 +428,11 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                       ></input>
                     ) : null} */}
                     {isHost ? 
-                    ( attendeeIdList.length == 0 ? <div onClick={() =>{
-                      videoHandler(tileId);  
-                    }}><img style={{width: "13px"}} src={onVideoIcon}  />Toggle Video</div> : <div><img style={{width: "13px"}} src={offVideoIcon} onClick={() =>{
+                    (
+                      <div className="videoToggle" onClick={() =>{
                         videoHandler(tileId);  
-                      }} />Toggle Video</div>)
+                      }}><img style={{width: "18px"}}  src={offVideoIcon}  /></div>
+                    )
                     : null }
                     
                   </div>
