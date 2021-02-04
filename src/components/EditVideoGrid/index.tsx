@@ -64,58 +64,59 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
   };
 
   const fbGoLive = () => {
+    FB.ui(
+      {
+        display: 'popup',
+        method: 'live_broadcast',
+        phase: 'create',
+      },
+      createRes => {
+        console.log(createRes);
+        let mediaRecorder;
+        let mediaStream;
 
-     FB.ui({
-           display: 'popup',
-           method: 'live_broadcast',
-           phase: 'create'
-         }, (createRes) => {
-           console.log(createRes);
-           let mediaRecorder;
-           let mediaStream;
+        FB.ui(
+          {
+            display: 'popup',
+            method: 'live_broadcast',
+            phase: 'publish',
+            broadcast_data: createRes,
+          },
+          publishRes => {
+            console.log(publishRes);
+          }
+        );
 
-           FB.ui({
-              display: 'popup',
-              method: 'live_broadcast',
-              phase: 'publish',
-              broadcast_data: createRes
-            }, (publishRes) => {
-              console.log(publishRes);
-            });
+        const ws = new WebSocket(
+          `${window.location.protocol.replace('http', 'ws')}//${
+            // http: => ws:, https: -> wss:
+            window.location.host
+          }/rtmp/${encodeURIComponent(createRes.stream_url)}`
+        );
 
-           const ws = new WebSocket(
-             window.location.protocol.replace('http', 'ws') + '//' + // http: => ws:, https: -> wss:
-             window.location.host +
-             '/rtmp/' +
-             encodeURIComponent(createRes.stream_url)
-           );
+        ws.addEventListener('open', e => {
+          console.log('WebSocket Open', e);
+          mediaStream = document.querySelector('canvas').captureStream(30); // 30 FPS
+          mediaRecorder = new MediaRecorder(mediaStream, {
+            mimeType: 'video/webm;codecs=h264',
+            videoBitsPerSecond: 3145728,
+          });
 
-           ws.addEventListener('open', (e) => {
-             console.log('WebSocket Open', e);
-             mediaStream = document.querySelector('canvas').captureStream(30); // 30 FPS
-             mediaRecorder = new MediaRecorder(mediaStream, {
-               mimeType: 'video/webm;codecs=h264',
-               videoBitsPerSecond : 3145728
-             });
+          mediaRecorder.addEventListener('dataavailable', e => {
+            ws.send(e.data);
+          });
 
-             mediaRecorder.addEventListener('dataavailable', (e) => {
-               ws.send(e.data);
-             });
+          mediaRecorder.addEventListener('stop', ws.close.bind(ws));
 
-             mediaRecorder.addEventListener('stop', ws.close.bind(ws));
+          mediaRecorder.start(1000); // Start recording, and dump data every second
+        });
 
-             mediaRecorder.start(1000); // Start recording, and dump data every second
-
-
-           });
-
-           ws.addEventListener('close', (e) => {
-             console.log('WebSocket Close', e);
-             mediaRecorder.stop();
-           });
-
-         });
-       });
+        ws.addEventListener('close', e => {
+          console.log('WebSocket Close', e);
+          mediaRecorder.stop();
+        });
+      }
+    );
     // FB.ui(
     //   {
     //     display: 'popup',
