@@ -17,7 +17,8 @@
     "react-router-dom": "^5.1.2",
     "styled-components": "^5.2.1",
     "styled-system": "^5.1.5",
-    "throttle-debounce": "^2.3.0"
+    "throttle-debounce": "^2.3.0",
+    "ws": "^7.4.3"
   },
   "scripts": {
     "build": "npm install && npm run build:prod",
