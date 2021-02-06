@@ -5,7 +5,7 @@ const app = express();
 const WebSocketServer = require('ws').Server;
 
 let broadcaster;
-const port = 4000;
+const port = 3000;
 
 const http = require('http');
 

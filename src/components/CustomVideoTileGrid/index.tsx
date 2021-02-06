@@ -254,6 +254,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       // var x1 = document.querySelector(".MainVideoWrapper video");
       // video.push(x1);
       var x2 = document.querySelectorAll(".DashboardMainContent Video");
+      console.log('is it calling.. ', x2)
       for(let j =0; j < x2.length; j++){
         video.push(x2[j]);
       }
