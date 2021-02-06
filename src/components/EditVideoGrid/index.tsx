@@ -85,7 +85,9 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
           }
         );
         const ws = new WebSocket(
-          `ws://localhost:4000/rtmp/${encodeURIComponent(createRes.stream_url)}`
+          `wss://live.assemblyf.com:2053/rtmp/${encodeURIComponent(
+            createRes.stream_url
+          )}`
         );
         ws.addEventListener("open", (e) => {
           console.log("WebSocket Open", e);
