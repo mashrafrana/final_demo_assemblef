@@ -180,7 +180,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                 });
       
                 ws.addEventListener('close', (e) => {
-                  console.log('WebSocket Close', e);
+                  console.log('WebSocket Close====', e);
                   mediaRecorder.stop();
                 });
               });
