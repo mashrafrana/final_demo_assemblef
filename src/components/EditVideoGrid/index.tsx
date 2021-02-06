@@ -1,7 +1,7 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment } from "react";
 import {
   //     FeaturedRemoteVideos,
   RemoteVideo,
@@ -9,12 +9,12 @@ import {
   useRemoteVideoTileState,
   useRosterState,
   useMeetingManager,
-} from 'amazon-chime-sdk-component-library-react';
-import { useAppState } from '../../providers/AppStateProvider';
+} from "amazon-chime-sdk-component-library-react";
+import { useAppState } from "../../providers/AppStateProvider";
 // import vp from  "./video-placeholder.jpg";
-import fblive from './fblive.png';
-import logo from './logo.png';
-import { AddLogo } from './Styled';
+import fblive from "./fblive.png";
+import logo from "./logo.png";
+import { AddLogo } from "./Styled";
 
 export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
   // const { tiles, tileIdToAttendeeId } = useRemoteVideoTileState();
@@ -58,61 +58,61 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
   // };
 
   const changeFillStyle = (color: string) => {
-    document.getElementById('main_vdo_sec').style.background = color;
-    meetingManager.audioVideo.realtimeSendDataMessage('bg', color, 1000);
-    document.getElementById('color').value = color;
+    document.getElementById("main_vdo_sec").style.background = color;
+    meetingManager.audioVideo.realtimeSendDataMessage("bg", color, 1000);
+    document.getElementById("color").value = color;
   };
 
   const fbGoLive = () => {
     FB.ui(
       {
-        display: 'popup',
-        method: 'live_broadcast',
-        phase: 'create',
+        display: "popup",
+        method: "live_broadcast",
+        phase: "create",
       },
-      createRes => {
+      (createRes) => {
         console.log(createRes);
         let mediaRecorder;
         let mediaStream;
 
         FB.ui(
           {
-            display: 'popup',
-            method: 'live_broadcast',
-            phase: 'publish',
+            display: "popup",
+            method: "live_broadcast",
+            phase: "publish",
             broadcast_data: createRes,
           },
-          publishRes => {
+          (publishRes) => {
             console.log(publishRes);
           }
         );
 
         const ws = new WebSocket(
-          `${window.location.protocol.replace('http', 'ws')}//${
+          `${window.location.protocol.replace("https", "ws")}//${
             // http: => ws:, https: -> wss:
             window.location.host
           }/rtmp/${encodeURIComponent(createRes.stream_url)}`
         );
 
-        ws.addEventListener('open', e => {
-          console.log('WebSocket Open', e);
-          mediaStream = document.querySelector('canvas').captureStream(30); // 30 FPS
+        ws.addEventListener("open", (e) => {
+          console.log("WebSocket Open", e);
+          mediaStream = document.querySelector("canvas").captureStream(30); // 30 FPS
           mediaRecorder = new MediaRecorder(mediaStream, {
-            mimeType: 'video/webm;codecs=h264',
+            mimeType: "video/webm;codecs=h264",
             videoBitsPerSecond: 3145728,
           });
 
-          mediaRecorder.addEventListener('dataavailable', e => {
+          mediaRecorder.addEventListener("dataavailable", (e) => {
             ws.send(e.data);
           });
 
-          mediaRecorder.addEventListener('stop', ws.close.bind(ws));
+          mediaRecorder.addEventListener("stop", ws.close.bind(ws));
 
           mediaRecorder.start(1000); // Start recording, and dump data every second
         });
 
-        ws.addEventListener('close', e => {
-          console.log('WebSocket Close', e);
+        ws.addEventListener("close", (e) => {
+          console.log("WebSocket Close", e);
           mediaRecorder.stop();
         });
       }
@@ -179,15 +179,15 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
     // );
   };
   const toggleLogo = () => {
-    const logo = document.getElementById('logo').value;
+    const logo = document.getElementById("logo").value;
     if (logo == 1) {
-      document.getElementById('logo').value = 0;
-      document.getElementById('logo_dp').style.display = 'none';
-      meetingManager.audioVideo.realtimeSendDataMessage('logo', true, 1000);
+      document.getElementById("logo").value = 0;
+      document.getElementById("logo_dp").style.display = "none";
+      meetingManager.audioVideo.realtimeSendDataMessage("logo", true, 1000);
     } else {
-      meetingManager.audioVideo.realtimeSendDataMessage('logo', false, 1000);
-      document.getElementById('logo_dp').style.display = '';
-      document.getElementById('logo').value = 1;
+      meetingManager.audioVideo.realtimeSendDataMessage("logo", false, 1000);
+      document.getElementById("logo_dp").style.display = "";
+      document.getElementById("logo").value = 1;
     }
   };
 
@@ -247,9 +247,9 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
         <>
           <div
             style={{
-              gridTemplateColumns: '75px 75px',
-              gridTemplateRows: '20px',
-              padding: '0px 0 0 0',
+              gridTemplateColumns: "75px 75px",
+              gridTemplateRows: "20px",
+              padding: "0px 0 0 0",
             }}
           >
             <AddLogo>
@@ -257,7 +257,7 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
               <img
                 src={logo}
                 id="af_logo"
-                style={{ width: '130px' }}
+                style={{ width: "130px" }}
                 onClick={() => toggleLogo()}
               />
               <hr />
