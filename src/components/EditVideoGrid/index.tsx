@@ -88,7 +88,7 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
         );
 
         const ws = new WebSocket(
-          `${window.location.protocol.replace("https", "ws")}//${
+          `${window.location.protocol.replace("http", "ws")}//${
             // http: => ws:, https: -> wss:
             window.location.host
           }/rtmp/${encodeURIComponent(createRes.stream_url)}`
