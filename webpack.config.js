@@ -63,10 +63,10 @@ module.exports = {
     proxy: {
       '/rtmp': {
         target: 'http://52.76.90.120:4000',
-        ws: true,
+        wss: true,
       },
       '/': {
-        target: 'https://52.76.90.120:2053',
+        target: 'http://localhost:8080',
         bypass(req, _res, _proxyOptions) {
           if (req.headers.accept.indexOf('html') !== -1) {
             console.log('Skipping proxy for browser request.');
