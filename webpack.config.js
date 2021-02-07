@@ -62,8 +62,8 @@ module.exports = {
   devServer: {
     proxy: {
       '/rtmp': {
-        target: 'http://52.76.90.120:4000',
-        wss: true,
+        target: 'http://localhost:4000',
+        ws: true,
       },
       '/': {
         target: 'http://localhost:8080',
