@@ -66,7 +66,7 @@ module.exports = {
         ws: true,
       },
       '/': {
-        target: 'http://localhost:8080',
+        target: 'https://live.assemblyf.com:2053',
         bypass(req, _res, _proxyOptions) {
           if (req.headers.accept.indexOf('html') !== -1) {
             console.log('Skipping proxy for browser request.');
