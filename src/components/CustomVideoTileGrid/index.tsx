@@ -214,13 +214,13 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     });
   
   const draw = () => {
-      var init_x = 60;
-      var init_y = 60;
+      var init_x = 0;
+      var init_y = 0;
       var big_img_width = 400
       var big_img_height = 225
       var small_img_width = 169
       var small_img_height = 99
-      var gap = 20
+      var gap = 0
       // var all_videos = document.getElementsByClassName('canvas_vdo')
       // var all_videos_filtered = [];
       // for (var i = 0; i < all_videos.length; i++) {
@@ -257,7 +257,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       for(let j =0; j < x2.length; j++){
         video.push(x2[j]);
       }
-
+      console.log('here we gooo', video.length)
       // var x3 = document.querySelectorAll("ch-video");
       // video.push(x3);
 
@@ -266,7 +266,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
           if(i == 0)
             ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
           else if (i == 1) {
-            ctx.drawImage(video[i], init_x + big_img_width + gap, init_y, small_img_width, small_img_height);  
+            ctx.drawImage(video[i], init_x + big_img_width + gap, init_y, big_img_width, big_img_height);  
           }
           else if (i == 2) {
             ctx.drawImage(video[i], init_x + big_img_width + small_img_width + gap*2, init_y, small_img_width, small_img_height);  
