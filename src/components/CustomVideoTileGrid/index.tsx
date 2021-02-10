@@ -216,8 +216,8 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   const draw = () => {
       var init_x = 0;
       var init_y = 0;
-      var big_img_width = 850
-      var big_img_height = 450
+      var big_img_width = 900
+      var big_img_height = 500
       var small_img_width = 169
       var small_img_height = 99
       var gap = 0
@@ -258,29 +258,28 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       for(let j =0; j < x2.length; j++){
         video.push(x2[j]);
       }
-      console.log('here we gooo', video.length)
       // var x3 = document.querySelectorAll("ch-video");
       // video.push(x3);
 
       if(video.length === 2) {
-        big_img_width = 425
+        big_img_width = 450
         big_img_height = 225
       }
       else if(video.length === 3) {
-        big_img_width = 283
-        big_img_height = 150
+        big_img_width = 300
+        big_img_height = 167
       }
       else if(video.length === 4) {
-        big_img_width = 212
-        big_img_height = 112
+        big_img_width = 225
+        big_img_height = 125
       }
       else if(video.length === 5) {
-        big_img_width = 170
-        big_img_height = 90
+        big_img_width = 180
+        big_img_height = 100
       }
       else if(video.length === 6) {
-        big_img_width = 142
-        big_img_height = 75
+        big_img_width = 150
+        big_img_height = 84
       }
 
       if(video && ctx){
