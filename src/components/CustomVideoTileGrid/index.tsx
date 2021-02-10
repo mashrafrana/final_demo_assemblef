@@ -270,24 +270,58 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
         big_img_width = 283
         big_img_height = 150
       }
+      else if(video.length === 4) {
+        big_img_width = 212
+        big_img_height = 112
+      }
+      else if(video.length === 5) {
+        big_img_width = 170
+        big_img_height = 90
+      }
+      else if(video.length === 6) {
+        big_img_width = 142
+        big_img_height = 75
+      }
 
       if(video && ctx){
-        for (let i = 0; i < video.length; i ++){
-          if(i == 0)
-            ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
-          else if (i == 1) {
-            ctx.drawImage(video[i], init_x + big_img_width + gap, init_y, big_img_width, big_img_height);  
+        if(video.length < 4 || video.length === 5) {
+          for (let i = 0; i < video.length; i ++){
+            if(i === 0)
+              ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
+            else if (i === 1) {
+              ctx.drawImage(video[i], init_x + big_img_width + gap, init_y, big_img_width, big_img_height);  
+            }
+            else if (i === 2) {
+              ctx.drawImage(video[i], init_x + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
+            }
+            else if (i === 3) {
+              ctx.drawImage(video[i], init_x + big_img_width + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
+            }
+            else if (i === 4) {
+              ctx.drawImage(video[i], init_x + big_img_width + big_img_width + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
+            }
           }
-          else if (i == 2) {
-            ctx.drawImage(video[i], init_x + big_img_width + small_img_width + gap*2, init_y, small_img_width, small_img_height);  
+        }
+        else if(video.length < 5 || video.length === 6){
+          for (let i = 0; i < video.length; i ++){
+            if(i === 0)
+              ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
+            else if (i === 1) {
+              ctx.drawImage(video[i], init_x + big_img_width, init_y, big_img_width, big_img_height);  
+            }
+            else if (i === 2) {
+              ctx.drawImage(video[i], init_x, init_y + big_img_width, big_img_width, big_img_height); 
+            }
+            else if (i === 3) {
+              ctx.drawImage(video[i], init_x + big_img_width, init_y + big_img_height, big_img_width, big_img_height); 
+            }
+            else if (i === 4) {
+              ctx.drawImage(video[i], init_x + big_img_width + big_img_width, init_y + big_img_height +big_img_height, big_img_width, big_img_height); 
+            }
+            else if (i === 5) {
+              ctx.drawImage(video[i], init_x + big_img_width + big_img_width + big_img_width, init_y + big_img_height +big_img_height + big_img_height, big_img_width, big_img_height); 
+            }
           }
-          else if (i == 3) {
-            ctx.drawImage(video[i], init_x + big_img_width + gap, init_y + small_img_height + gap, small_img_width, small_img_height);  
-          }
-          else if (i == 4) {
-            ctx.drawImage(video[i], init_x + big_img_width + small_img_width + gap * 2, init_y + small_img_height + gap, small_img_width, small_img_height);  
-          }
-
         }
       }
       // if(all_videos_filtered_.length != all_videos_filtered.length){
