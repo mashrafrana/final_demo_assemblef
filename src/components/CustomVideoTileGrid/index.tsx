@@ -323,8 +323,8 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
           }
         }
       }
-      var img = document.getElementById('af_logo');
-      ctx.drawImage(img, init_x, 475, 130, 45)
+      //var img = document.getElementById('af_logo');
+      //ctx.drawImage(img, init_x, 475, 130, 45)
     }
 
   const addClassForVideo = (videoCount) => {
