@@ -216,8 +216,8 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   const draw = () => {
       var init_x = 0;
       var init_y = 0;
-      var big_img_width = 900
-      var big_img_height = 500
+      var big_img_width = 875
+      var big_img_height = 465
       var small_img_width = 169
       var small_img_height = 99
       var gap = 0
@@ -262,24 +262,24 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       // video.push(x3);
 
       if(video.length === 2) {
-        big_img_width = 450
-        big_img_height = 225
+        big_img_width = 438
+        big_img_height = 232
       }
       else if(video.length === 3) {
-        big_img_width = 300
-        big_img_height = 167
+        big_img_width = 292
+        big_img_height = 155
       }
       else if(video.length === 4) {
-        big_img_width = 225
-        big_img_height = 125
+        big_img_width = 218
+        big_img_height = 116
       }
       else if(video.length === 5) {
-        big_img_width = 180
-        big_img_height = 100
+        big_img_width = 175
+        big_img_height = 93
       }
       else if(video.length === 6) {
-        big_img_width = 150
-        big_img_height = 84
+        big_img_width = 145
+        big_img_height = 77
       }
 
       if(video && ctx){
@@ -324,13 +324,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
         }
       }
       var img = document.getElementById('af_logo');
-      ctx.drawImage(img, init_x + big_img_width + gap*2 + big_img_width*2 - 150, 10, 126, 46)
-      // if(all_videos_filtered_.length != all_videos_filtered.length){
-      //   for (var i = 0; i < all_videos_filtered.length; i++){
-      //     all_videos_filtered_ = []
-      //     all_videos_filtered_.push(all_videos_filtered[i])
-      //   }
-      // }
+      ctx.drawImage(img, init_x, 475, 130, 45)
     }
 
   const addClassForVideo = (videoCount) => {
