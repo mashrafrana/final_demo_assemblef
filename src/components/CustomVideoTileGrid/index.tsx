@@ -240,17 +240,17 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       var canvas = document.getElementById("canvas");
       var video:any = [];
       var ctx = canvas?.getContext('2d');
-      if(ctx){
-        var color = document.getElementById('color').value;
-        if(color)
-          ctx.fillStyle = color
-          ctx.fillRect(0,0, 900, 350)
-        var logo = document.getElementById('logo').value;
-        if (logo == 1 || logo == '1'){
-          var img = document.getElementById('af_logo');
-          ctx.drawImage(img, init_x + big_img_width + gap*2 + small_img_width*2 - 150, 10, 126, 46)
-        }
-      }
+      // if(ctx){
+      //   var color = document.getElementById('color').value;
+      //   if(color)
+      //     ctx.fillStyle = color
+      //     ctx.fillRect(0,0, 900, 350)
+      //   var logo = document.getElementById('logo').value;
+      //   if (logo == 1 || logo == '1'){
+      //     var img = document.getElementById('af_logo');
+      //     ctx.drawImage(img, init_x + big_img_width + gap*2 + small_img_width*2 - 150, 10, 126, 46)
+      //   }
+      // }
 
       // var x1 = document.querySelector(".MainVideoWrapper video");
       // video.push(x1);
@@ -323,6 +323,8 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
           }
         }
       }
+      var img = document.getElementById('af_logo');
+      ctx.drawImage(img, init_x + big_img_width + gap*2 + big_img_width*2 - 150, 10, 126, 46)
       // if(all_videos_filtered_.length != all_videos_filtered.length){
       //   for (var i = 0; i < all_videos_filtered.length; i++){
       //     all_videos_filtered_ = []
@@ -354,7 +356,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
               <div id="main_vdo_sec" className={attendeeIdList.length === 0 ? "VideoSection" : "VideoSectionEmpty"}>
                 <div className={addClassForVideo(attendeeIdList.length)}>
                 <div className="video-logo">
-                    <img id="logo_dp" src={logo} style={{width: "130px"}} /> 
+                    <img id="af_logo" src={logo} style={{width: "130px"}} /> 
                 </div>
                   {/* <div className={"Video"}>
                       {attendeeIdList.includes(tileIdToAttendeeId[featureTileId])?

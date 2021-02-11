@@ -65,7 +65,6 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
   };
 
   const fbGoLive = () => {
-    console.log('yes cmomingg...');
     FB.ui(
       {
         display: 'popup',
@@ -75,7 +74,6 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
       createRes => {
         let mediaRecorder;
         let mediaStream;
-        console.log('===a==a=a...');
         FB.ui(
           {
             display: 'popup',
@@ -87,7 +85,6 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
             console.log(publishRes);
           }
         );
-        console.log('==444a...');
         const ws = new WebSocket(
           `wss://live.assemblyf.com:2053/rtmp/${encodeURIComponent(
             createRes.stream_url
