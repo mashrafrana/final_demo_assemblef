@@ -323,8 +323,8 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
           }
         }
       }
-      //var img = document.getElementById('af_logo');
-      //ctx.drawImage(img, init_x, 475, 130, 45)
+      var logoImg = document.getElementById('logoImgId');
+      ctx.drawImage(logoImg, 10, 10, 130, 50)
     }
 
   const addClassForVideo = (videoCount) => {
@@ -350,7 +350,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
               <div id="main_vdo_sec" className={attendeeIdList.length === 0 ? "VideoSection" : "VideoSectionEmpty"}>
                 <div className={addClassForVideo(attendeeIdList.length)}>
                 <div className="video-logo">
-                    <img id="af_logo" src={logo} style={{width: "130px"}} /> 
+                    <img id="logoImgId" src={logo} style={{width: "130px"}} /> 
                 </div>
                   {/* <div className={"Video"}>
                       {attendeeIdList.includes(tileIdToAttendeeId[featureTileId])?
