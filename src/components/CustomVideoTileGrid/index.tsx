@@ -79,7 +79,8 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   },[]);
 
   useEffect(()=>{
-     addClassForVideo(attendeeIdList.length);
+    console.log('comingg hommmm ', attendeeIdList.length)
+     addClassForVideo(attendeeIdList.length - 1);
   },[attendeeIdList.length])
     
   const changeState = (data:any)=>{
@@ -220,8 +221,8 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   const draw = () => {
       var init_x = 0;
       var init_y = 0;
-      var big_img_width = 875
-      var big_img_height = 465
+      var big_img_width = 900
+      var big_img_height = 400
       var small_img_width = 169
       var small_img_height = 99
       var gap = 0
@@ -266,24 +267,24 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       // video.push(x3);
 
       if(video.length === 2) {
-        big_img_width = 438
-        big_img_height = 232
+        big_img_width = 450
+        big_img_height = 200
       }
       else if(video.length === 3) {
-        big_img_width = 292
-        big_img_height = 155
+        big_img_width = 300
+        big_img_height = 133
       }
       else if(video.length === 4) {
-        big_img_width = 218
-        big_img_height = 116
+        big_img_width = 225
+        big_img_height = 100
       }
       else if(video.length === 5) {
-        big_img_width = 175
-        big_img_height = 93
+        big_img_width = 180
+        big_img_height = 80
       }
       else if(video.length === 6) {
-        big_img_width = 145
-        big_img_height = 77
+        big_img_width = 150
+        big_img_height = 67
       }
 
       if(video && ctx){
@@ -292,10 +293,10 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
             if(i === 0)
               ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
             else if (i === 1) {
-              ctx.drawImage(video[i], init_x, init_y + big_img_width, big_img_width, big_img_height);  
+              ctx.drawImage(video[i], init_x + big_img_width, init_y, big_img_width, big_img_height);  
             }
             else if (i === 2) {
-              ctx.drawImage(video[i], init_x, init_y + big_img_width + big_img_width, big_img_width, big_img_height); 
+              ctx.drawImage(video[i], init_x + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
             }
             else if (i === 3) {
               ctx.drawImage(video[i], init_x + big_img_width + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
@@ -349,7 +350,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     
   return (
       <Fragment>
-         { isHost ? <canvas id="canvas" width="900" height="350" style={{borderRadius: '20px',backgroundColor:'red', display:'none'}}></canvas>:null}           
+         { isHost ? <canvas id="canvas" width="900" height="400" style={{borderRadius: '20px',backgroundColor:'red', display:'none'}}></canvas>:null}           
           <div className={"DashboardMainContent"}>
               <div id="main_vdo_sec" className={attendeeIdList.length === 0 ? "VideoSection" : "VideoSectionEmpty"}>
                 <div className={addClassForVideo(attendeeIdList.length)}>
