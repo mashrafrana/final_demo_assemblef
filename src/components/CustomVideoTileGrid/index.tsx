@@ -77,6 +77,10 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     return () => { isMounted = false };
    
   },[]);
+
+  useEffect(()=>{
+    addClassForVideo(attendeeIdList.length);
+  },attendeeIdList)
     
   const changeState = (data:any)=>{
       c = []; 
@@ -324,7 +328,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
         }
       }
       var logoImg = document.getElementById('logoImgId');
-      ctx.drawImage(logoImg, 10, 10, 130, 50)
+      ctx.drawImage(logoImg, 10, 10, 140, 40)
     }
 
   const addClassForVideo = (videoCount) => {
