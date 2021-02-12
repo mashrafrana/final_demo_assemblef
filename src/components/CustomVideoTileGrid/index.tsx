@@ -79,7 +79,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   },[]);
 
   useEffect(()=>{
-     addClassForVideo(attendeeIdList.length + 1);
+     addClassForVideo(tiles.length);
   },[tiles.length])
     
   const changeState = (data:any)=>{
