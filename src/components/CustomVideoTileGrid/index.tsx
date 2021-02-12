@@ -77,6 +77,11 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     return () => { isMounted = false };
    
   },[]);
+
+  useEffect(()=>{
+    console.log('comingg hommmm ', tiles.length)
+     addClassForVideo(attendeeIdList.length);
+  },[tiles.length])
     
   const changeState = (data:any)=>{
       c = []; 
