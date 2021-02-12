@@ -79,8 +79,8 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   },[]);
 
   useEffect(()=>{
-    addClassForVideo(attendeeIdList.length);
-  },attendeeIdList)
+     addClassForVideo(attendeeIdList.length);
+  },[attendeeIdList.length])
     
   const changeState = (data:any)=>{
       c = []; 
@@ -292,10 +292,10 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
             if(i === 0)
               ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
             else if (i === 1) {
-              ctx.drawImage(video[i], init_x + big_img_width + gap, init_y, big_img_width, big_img_height);  
+              ctx.drawImage(video[i], init_x, init_y + big_img_width, big_img_width, big_img_height);  
             }
             else if (i === 2) {
-              ctx.drawImage(video[i], init_x + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
+              ctx.drawImage(video[i], init_x, init_y + big_img_width + big_img_width, big_img_width, big_img_height); 
             }
             else if (i === 3) {
               ctx.drawImage(video[i], init_x + big_img_width + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
