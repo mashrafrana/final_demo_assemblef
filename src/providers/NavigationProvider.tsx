@@ -6,7 +6,7 @@ import React, {
   useContext,
   useEffect,
   useRef,
-  ReactNode
+  ReactNode,
 } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
@@ -47,11 +47,12 @@ const NavigationProvider = ({ children }: Props) => {
 
   useEffect(() => {
     if (location.pathname.includes(routes.MEETING)) {
-      return () => { 
+      return () => {
+        console.log('coming heerere......');
         meetingManager.leave();
-      }
+      };
     }
-  }, [location.pathname])
+  }, [location.pathname, meetingManager]);
 
   useEffect(() => {
     const handler = () => {
@@ -112,7 +113,7 @@ const NavigationProvider = ({ children }: Props) => {
     openRoster,
     closeRoster,
     openNavbar,
-    closeNavbar
+    closeNavbar,
   };
   return (
     <NavigationContext.Provider value={providerValue}>

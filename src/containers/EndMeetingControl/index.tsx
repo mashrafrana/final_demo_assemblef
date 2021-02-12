@@ -11,7 +11,7 @@ import {
   ModalHeader,
   ModalButton,
   ModalButtonGroup,
-  useMeetingManager
+  useMeetingManager,
 } from 'amazon-chime-sdk-component-library-react';
 
 import { endMeeting } from '../../utils/api';
@@ -27,6 +27,7 @@ const EndMeetingControl: React.FC = () => {
   const history = useHistory();
 
   const leaveMeeting = async (): Promise<void> => {
+    console.log('bahtreeen coming...');
     history.push(routes.HOME);
   };
 
@@ -68,7 +69,7 @@ const EndMeetingControl: React.FC = () => {
                 label="Leave Meeting"
                 closesModal
               />,
-              <ModalButton variant="secondary" label="Cancel" closesModal />
+              <ModalButton variant="secondary" label="Cancel" closesModal />,
             ]}
           />
         </Modal>

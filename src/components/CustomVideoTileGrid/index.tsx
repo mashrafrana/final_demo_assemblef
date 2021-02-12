@@ -77,11 +77,6 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     return () => { isMounted = false };
    
   },[]);
-
-  useEffect(()=>{
-    console.log('comingg hommmm ', attendeeIdList.length)
-     addClassForVideo(attendeeIdList.length - 1);
-  },[attendeeIdList.length])
     
   const changeState = (data:any)=>{
       c = []; 
@@ -268,11 +263,11 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
 
       if(video.length === 2) {
         big_img_width = 450
-        big_img_height = 200
+        big_img_height = 400
       }
       else if(video.length === 3) {
         big_img_width = 300
-        big_img_height = 133
+        big_img_height = 400
       }
       else if(video.length === 4) {
         big_img_width = 225
@@ -280,7 +275,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       }
       else if(video.length === 5) {
         big_img_width = 180
-        big_img_height = 80
+        big_img_height = 400
       }
       else if(video.length === 6) {
         big_img_width = 150
