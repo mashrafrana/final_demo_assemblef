@@ -332,7 +332,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
         }
       }
       var logoImg = document.getElementById('logoImgId');
-      ctx.drawImage(logoImg, 10, 10, 140, 40)
+      ctx.drawImage(logoImg, 740, 370, 140, 30)
     }
 
   const addClassForVideo = (videoCount) => {
