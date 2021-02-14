@@ -60,13 +60,14 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   const [attendeeIdList  ,setAttendeeIdList] = useState([]);
   const [dynamicVideoClass, setDynamicVideoClass] = useState("")
   const [videoTiles, setVideoTiles] = useState(tiles)
+  const [videoWidth, setVideoWidth] = useState(0)
   // const featureTileId = useState(_featureTileId);
   const audioVideo = useAudioVideo();
   var c :any = [];
 
   // const attendeeId = audioVideoController.configuration.credentials.attendeeId;
   useEffect(()=>{
-
+    window.addEventListener('resize', resizeWindow)
     let isMounted = true
     meetingManager?.audioVideo?.realtimeSubscribeToReceiveDataMessage("attendeeIdList", (dataMessage: DataMessage) => { 
       
@@ -80,8 +81,17 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
    
   },[]);
 
+  const resizeWindow = () => {
+    const elmnt = document.getElementById('main_vdo_sec');
+    setVideoWidth(parseInt(elmnt.offsetWidth/1.77));
+  }
+
   useEffect(()=>{
-     addClassForVideo(tiles.length);
+    isHost ? addClassForVideo(tiles.length) : addClassForVideo(tiles.length + 1);
+     if (tiles.length === 0) {
+      const elmnt = document.getElementById('main_vdo_sec');
+      setVideoWidth(parseInt(elmnt.offsetWidth/1.77));
+    }
   },[tiles.length])
     
   const changeState = (data:any)=>{
@@ -107,6 +117,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       meetingManager.audioVideo.realtimeSendDataMessage("attendeeIdList", lis, 1000);
       //console.log(attendeeIdList);
       //draw();
+      console.log('yes here comesss.....')
       addClassForVideo(lis.length)
     }
 
@@ -124,7 +135,6 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
         }
 
       meetingManager.audioVideo.realtimeSendDataMessage("attendeeIdList", lis, 1000);
-      console.log('checkig length ', lis.length)
       addClassForVideo(lis.length)
     }
   
@@ -246,93 +256,96 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       //     video.push(all_videos_filtered[i]) 
       // }
       var canvas = document.getElementById("canvas");
-      var video:any = [];
-      var ctx = canvas?.getContext('2d');
-      // if(ctx){
-      //   var color = document.getElementById('color').value;
-      //   if(color)
-      //     ctx.fillStyle = color
-      //     ctx.fillRect(0,0, 900, 350)
-      //   var logo = document.getElementById('logo').value;
-      //   if (logo == 1 || logo == '1'){
-      //     var img = document.getElementById('af_logo');
-      //     ctx.drawImage(img, init_x + big_img_width + gap*2 + small_img_width*2 - 150, 10, 126, 46)
-      //   }
-      // }
+      if(canvas) {
+          var video:any = [];
+          var ctx = canvas?.getContext('2d');
+          // if(ctx){
+          //   var color = document.getElementById('color').value;
+          //   if(color)
+          //     ctx.fillStyle = color
+          //     ctx.fillRect(0,0, 900, 350)
+          //   var logo = document.getElementById('logo').value;
+          //   if (logo == 1 || logo == '1'){
+          //     var img = document.getElementById('af_logo');
+          //     ctx.drawImage(img, init_x + big_img_width + gap*2 + small_img_width*2 - 150, 10, 126, 46)
+          //   }
+          // }
 
-      // var x1 = document.querySelector(".MainVideoWrapper video");
-      // video.push(x1);
-      var x2 = document.querySelectorAll(".VideoSectionEmpty Video");
-      for(let j =0; j < x2.length; j++){
-        video.push(x2[j]);
-      }
-      // var x3 = document.querySelectorAll("ch-video");
-      // video.push(x3);
+          // var x1 = document.querySelector(".MainVideoWrapper video");
+          // video.push(x1);
+          var x2 = document.querySelectorAll(".VideoSectionEmpty Video");
+          for(let j =0; j < x2.length; j++){
+            video.push(x2[j]);
+          }
+          // var x3 = document.querySelectorAll("ch-video");
+          // video.push(x3);
 
-      if(video.length === 2) {
-        big_img_width = 450
-        big_img_height = 400
-      }
-      else if(video.length === 3) {
-        big_img_width = 300
-        big_img_height = 400
-      }
-      else if(video.length === 4) {
-        big_img_width = 225
-        big_img_height = 100
-      }
-      else if(video.length === 5) {
-        big_img_width = 180
-        big_img_height = 400
-      }
-      else if(video.length === 6) {
-        big_img_width = 150
-        big_img_height = 67
-      }
+          if(video.length === 2) {
+            big_img_width = 450
+            big_img_height = 400
+          }
+          else if(video.length === 3) {
+            big_img_width = 300
+            big_img_height = 400
+          }
+          else if(video.length === 4) {
+            big_img_width = 225
+            big_img_height = 100
+          }
+          else if(video.length === 5) {
+            big_img_width = 180
+            big_img_height = 400
+          }
+          else if(video.length === 6) {
+            big_img_width = 150
+            big_img_height = 67
+          }
 
-      if(video && ctx){
-        if(video.length < 4 || video.length === 5) {
-          for (let i = 0; i < video.length; i ++){
-            if(i === 0)
-              ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
-            else if (i === 1) {
-              ctx.drawImage(video[i], init_x + big_img_width, init_y, big_img_width, big_img_height);  
+          if(video && ctx){
+            if(video.length < 4 || video.length === 5) {
+              for (let i = 0; i < video.length; i ++){
+                if(i === 0)
+                  ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
+                else if (i === 1) {
+                  ctx.drawImage(video[i], init_x + big_img_width, init_y, big_img_width, big_img_height);  
+                }
+                else if (i === 2) {
+                  ctx.drawImage(video[i], init_x + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
+                }
+                else if (i === 3) {
+                  ctx.drawImage(video[i], init_x + big_img_width + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
+                }
+                else if (i === 4) {
+                  ctx.drawImage(video[i], init_x + big_img_width + big_img_width + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
+                }
+              }
             }
-            else if (i === 2) {
-              ctx.drawImage(video[i], init_x + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
-            }
-            else if (i === 3) {
-              ctx.drawImage(video[i], init_x + big_img_width + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
-            }
-            else if (i === 4) {
-              ctx.drawImage(video[i], init_x + big_img_width + big_img_width + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
+            else if(video.length < 5 || video.length === 6){
+              for (let i = 0; i < video.length; i ++){
+                if(i === 0)
+                  ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
+                else if (i === 1) {
+                  ctx.drawImage(video[i], init_x + big_img_width, init_y, big_img_width, big_img_height);  
+                }
+                else if (i === 2) {
+                  ctx.drawImage(video[i], init_x, init_y + big_img_width, big_img_width, big_img_height); 
+                }
+                else if (i === 3) {
+                  ctx.drawImage(video[i], init_x + big_img_width, init_y + big_img_height, big_img_width, big_img_height); 
+                }
+                else if (i === 4) {
+                  ctx.drawImage(video[i], init_x + big_img_width + big_img_width, init_y + big_img_height +big_img_height, big_img_width, big_img_height); 
+                }
+                else if (i === 5) {
+                  ctx.drawImage(video[i], init_x + big_img_width + big_img_width + big_img_width, init_y + big_img_height +big_img_height + big_img_height, big_img_width, big_img_height); 
+                }
+              }
             }
           }
-        }
-        else if(video.length < 5 || video.length === 6){
-          for (let i = 0; i < video.length; i ++){
-            if(i === 0)
-              ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
-            else if (i === 1) {
-              ctx.drawImage(video[i], init_x + big_img_width, init_y, big_img_width, big_img_height);  
-            }
-            else if (i === 2) {
-              ctx.drawImage(video[i], init_x, init_y + big_img_width, big_img_width, big_img_height); 
-            }
-            else if (i === 3) {
-              ctx.drawImage(video[i], init_x + big_img_width, init_y + big_img_height, big_img_width, big_img_height); 
-            }
-            else if (i === 4) {
-              ctx.drawImage(video[i], init_x + big_img_width + big_img_width, init_y + big_img_height +big_img_height, big_img_width, big_img_height); 
-            }
-            else if (i === 5) {
-              ctx.drawImage(video[i], init_x + big_img_width + big_img_width + big_img_width, init_y + big_img_height +big_img_height + big_img_height, big_img_width, big_img_height); 
-            }
-          }
-        }
+          var logoImg = document.getElementById('logoImgId');
+          ctx.drawImage(logoImg, 740, 370, 120, 30)
       }
-      var logoImg = document.getElementById('logoImgId');
-      ctx.drawImage(logoImg, 740, 370, 120, 30)
+      
     }
 
   const addClassForVideo = (videoCount) => {
@@ -372,7 +385,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   return (
       <Fragment>
          { isHost ? <canvas id="canvas" width="900" height="400" style={{borderRadius: '20px',backgroundColor:'red', display:'none'}}></canvas>:null}           
-          <div className={"DashboardMainContent"}>
+          <div className={"DashboardMainContent"} id="videoContainerId">
               <div id="main_vdo_sec" className={attendeeIdList.length === 0 ? "VideoSection" : "VideoSectionEmpty"}>
                 <div className={dynamicVideoClass}>
                 <div className="video-logo">
@@ -421,20 +434,19 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                           <>
                             { featureTileId !== tileId ? 
                                   <div key={tileId} className={"Video"}>
-                                    { remoteAttendeeId === attendeeId ?
-                                      <ParticipantLocalVideo
-                                            tileId={localVideoTileId}
-                                            className ={"img-fluid_360"}
-                                          />                                          
-                                      :                                    
-                                      <ParticipantLocalVideo
-                                        tileId={tileId}
-                                        className ={"img-fluid_360"}
-                                        />
-                                    }
+                                      { remoteAttendeeId === attendeeId ?
+                                        <ParticipantLocalVideo
+                                              tileId={localVideoTileId}
+                                              style={{height: parseInt(videoWidth)+"px", width: "100%"}}
+                                            />                                          
+                                        :                                    
+                                        <ParticipantLocalVideo
+                                          tileId={tileId}
+                                          style={{height: parseInt(videoWidth)+"px", width: "100%"}}
+                                          />
+                                      }
                                   </div>
                             :null}
-                              
                             {/* {remoteAttendeeId === attendeeId ?
                               <div key={tileId} className={"Video"}>
                                   <ParticipantLocalVideo

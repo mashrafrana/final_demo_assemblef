@@ -8,7 +8,6 @@
 .VideoSectionEmpty {
   background: #1e1e1e;
   /* border-radius: 20px; */
-  min-height: 360px;
 }
 
 .MainVideoWrapper {
@@ -64,6 +63,7 @@
   grid-template-columns: 100px 100px 100px 100px;
   grid-gap: 10px;
   padding-top: 20px;
+  padding-bottom: 100px;
 }
 
 .videoToggle {
