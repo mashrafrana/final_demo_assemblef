@@ -320,7 +320,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                 }
               }
             }
-            else if(video.length  === 4){
+            else if(video.length === 4){
               for (let i = 0; i < video.length; i ++){
                 if(i === 0)
                   ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
@@ -333,6 +333,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                 else if (i === 3) {
                   ctx.drawImage(video[i], init_x + big_img_width, init_y + big_img_height, big_img_width, big_img_height); 
                 }
+              }
             }
           }
           else if(video.length === 6) {
@@ -356,8 +357,9 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
               }
             }
           }
+
           var logoImg = document.getElementById('logoImgId');
-          ctx.drawImage(logoImg, 740, 320, 120, 30)
+          ctx.drawImage(logoImg, 740, 310, 120, 30)
       }
       
     }
@@ -400,7 +402,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       <Fragment>
          { isHost ? <canvas id="canvas" width="900" height="400" style={{borderRadius: '20px',backgroundColor:'red', display:'none'}}></canvas>:null}           
           <div className={"DashboardMainContent"} id="videoContainerId">
-              <div id="main_vdo_sec" className={attendeeIdList.length === 0 ? "VideoSection" : "VideoSectionEmpty"}>
+              <div id="main_vdo_sec" style={{height: parseInt(videoWidth)+"px"}} className={attendeeIdList.length === 0 ? "VideoSection" : "VideoSectionEmpty"}>
                 <div className={dynamicVideoClass}>
                 <div className="video-logo">
                     <img id="logoImgId" src={logo} style={{width: "130px"}} /> 
