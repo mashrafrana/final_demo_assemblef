@@ -22,7 +22,7 @@ import ParticipantLocalVideo from '../ParticipantLocalVideo';
 import logo from "./logo-white.png";
 import offVideoIcon from "./off-video-call.png";
 import onVideoIcon from "./on-video-call.png";
-
+let isMeetingLeft = false
 
 export interface BaseSdkProps {
   /** Optional css */
@@ -76,7 +76,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
         changeState(dataMessage.text());
       }  
     })
-    setInterval(function(){draw();}, 25);
+    isHost ? setInterval(function(){draw();}, 25) : "";
     return () => { isMounted = false };
    
   },[]);
@@ -87,7 +87,8 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   }
 
   useEffect(()=>{
-    isHost ? addClassForVideo(tiles.length) : addClassForVideo(tiles.length + 1);
+    console.log('in the ussefff')
+    isHost ? addClassForVideo(tiles.length) : "";
      if (tiles.length === 0) {
       const elmnt = document.getElementById('main_vdo_sec');
       setVideoWidth(parseInt(elmnt.offsetWidth/1.77));
@@ -95,45 +96,47 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   },[tiles.length])
     
   const changeState = (data:any)=>{
+    console.log('in the changestat')
       c = []; 
       const listAttendee = data.replace('[','').replace(']','').split(',');
       listAttendee.forEach((element:any) => {
          c.push(element.replace('"','').replace('"','').toString());
       });
-      console.log(c);
       setAttendeeIdList(c);
+      addClassForVideo(c.length)
     }
 
   const videoHandler = (tileId : number) => {
+    
       let lis :any = [];  
       if(!(attendeeIdList.includes(tileIdToAttendeeId[tileId]))){
         lis = [...attendeeIdList , tileIdToAttendeeId[tileId]];
-        setAttendeeIdList(lis);        
+        setAttendeeIdList(lis);      
+        isMeetingLeft = false;  
       }
       else{
         lis =  attendeeIdList.filter(o => o !== tileIdToAttendeeId[tileId]);
         setAttendeeIdList(lis);
+        isMeetingLeft = true;
       }
       meetingManager.audioVideo.realtimeSendDataMessage("attendeeIdList", lis, 1000);
       //console.log(attendeeIdList);
       //draw();
-      console.log('yes here comesss.....')
       addClassForVideo(lis.length)
     }
 
   const addLocalVideo = () => {      
         let lis :any = [];  
         if(!(attendeeIdList.includes(attendeeId))){
-        
           lis = [...attendeeIdList , attendeeId];
           setAttendeeIdList(lis);        
-          
+          isMeetingLeft = false;
         }
         else{
           lis =  attendeeIdList.filter(o => o !== attendeeId);
           setAttendeeIdList(lis);
+          isMeetingLeft = true;
         }
-
       meetingManager.audioVideo.realtimeSendDataMessage("attendeeIdList", lis, 1000);
       addClassForVideo(lis.length)
     }
@@ -234,8 +237,8 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   const draw = () => {
       var init_x = 0;
       var init_y = 0;
-      var big_img_width = 900
-      var big_img_height = 400
+      var big_img_width = 1280
+      var big_img_height = 720
       var small_img_width = 169
       var small_img_height = 99
       var gap = 0
@@ -281,24 +284,24 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
           // video.push(x3);
 
           if(video.length === 2) {
-            big_img_width = 450
-            big_img_height = 400
+            big_img_width = 640
+            big_img_height = 360
           }
           else if(video.length === 3) {
-            big_img_width = 300
-            big_img_height = 400
+            big_img_width = 426
+            big_img_height = 240
           }
           else if(video.length === 4) {
-            big_img_width = 225
-            big_img_height = 100
+            big_img_width = 320
+            big_img_height = 180
           }
           else if(video.length === 5) {
-            big_img_width = 180
-            big_img_height = 400
+            big_img_width = 256
+            big_img_height = 144
           }
           else if(video.length === 6) {
-            big_img_width = 150
-            big_img_height = 67
+            big_img_width = 213
+            big_img_height = 120
           }
 
           if(video && ctx){
@@ -379,30 +382,46 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       selectedClass = "MainVideoWrapperFive";
     }
     setDynamicVideoClass(selectedClass)
-      const onVideos = document.querySelectorAll('.VideoSectionEmpty Video');
-        if (tiles.length + 1 < onVideos.length) {
-            if(Object.keys(attendeeIdToTileId).length === 0) {
-              const lis = attendeeIdList.splice(-1,1);
-              setAttendeeIdList(lis);
-            }
-            else {
-              Object.keys(attendeeIdToTileId).map(function(key, index) {
-                if (!attendeeIdList.includes(key)) {
-                  const lis = attendeeIdList.filter(o => o !== key);
-                  setAttendeeIdList(lis);
-                }
-              });
-            }
+    // is anyone video close the meeting
+    let originalVideoSize = document.getElementById('main_vdo_sec');
+    originalVideoSize = parseInt(originalVideoSize.offsetWidth/1.77);
+    
+    if(isMeetingLeft === false) {
+      videoCount === 5 ? setVideoWidth(originalVideoSize) : ""
+    }
+    else {
+      videoCount === 3 ? setVideoWidth(originalVideoSize) : ""
+      videoCount === 5 ? setVideoWidth(originalVideoSize) : ""
+    }
+    videoCount === 4 ? setVideoWidth(parseInt(originalVideoSize/2)) : ""
+    videoCount === 6 ? setVideoWidth(parseInt(originalVideoSize/3)) : ""
+    // who left the meeting event by closing browser
+      // const onVideos = document.querySelectorAll('.VideoSectionEmpty Video');
+      //   if (tiles.length + 1 < onVideos.length) {
+      //     console.log('here111')
+      //       if(Object.keys(attendeeIdToTileId).length === 0) {
+      //         const lis = attendeeIdList.splice(-1,1);
+      //         setAttendeeIdList(lis);
+      //       }
+      //       else {
+      //         console.log('22222')
+      //         Object.keys(attendeeIdToTileId).map(function(key, index) {
+      //           if (!attendeeIdList.includes(key)) {
+      //             const lis = attendeeIdList.filter(o => o !== key);
+      //             setAttendeeIdList(lis);
+      //           }
+      //         });
+      //       }
             
-      }
+      // }
   }
 
     
   return (
       <Fragment>
-         { isHost ? <canvas id="canvas" width="900" height="400" style={{borderRadius: '20px',backgroundColor:'red', display:'none'}}></canvas>:null}           
+         { isHost ? <canvas id="canvas" width="1280" height="720" style={{borderRadius: '20px',backgroundColor:'red', display:'none'}}></canvas>:null}           
           <div className={"DashboardMainContent"} id="videoContainerId">
-              <div id="main_vdo_sec" style={{height: parseInt(videoWidth)+"px"}} className={attendeeIdList.length === 0 ? "VideoSection" : "VideoSectionEmpty"}>
+              <div id="main_vdo_sec" style={{"min-height": parseInt(videoWidth)+"px"}} className={attendeeIdList.length === 0 ? "VideoSection" : "VideoSectionEmpty"}>
                 <div className={dynamicVideoClass}>
                 <div className="video-logo">
                     <img id="logoImgId" src={logo} style={{width: "130px"}} /> 

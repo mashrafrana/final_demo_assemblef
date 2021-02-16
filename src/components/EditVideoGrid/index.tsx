@@ -283,16 +283,18 @@ export const EditVideoGrid: React.FC<Props> = ({ isSetting }) => {
                 ></div>
               </div>
             </AddLogo> */}
-            <AddLogo>
-              <h4>Facebook Go Live</h4>
-              <img
-                onClick={fbGoLive}
-                src={fblive}
-                width="100px"
-                height="40px"
-              />
-              <hr />
-            </AddLogo>
+            {isHost && (
+              <AddLogo>
+                <h4>Facebook Go Live</h4>
+                <img
+                  onClick={fbGoLive}
+                  src={fblive}
+                  width="100px"
+                  height="40px"
+                />
+                <hr />
+              </AddLogo>
+            )}
             {/* <AddLogo>
               <h4>Text</h4>
               <input type="text" />
