@@ -324,6 +324,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
               }
             }
             else if(video.length === 4){
+              console.log('yes here....')
               for (let i = 0; i < video.length; i ++){
                 if(i === 0)
                   ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
@@ -362,7 +363,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
           }
 
           var logoImg = document.getElementById('logoImgId');
-          ctx.drawImage(logoImg, 740, 310, 120, 30)
+          ctx.drawImage(logoImg, 1150, 660, 120, 25)
       }
       
     }
@@ -386,15 +387,10 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     let originalVideoSize = document.getElementById('main_vdo_sec');
     originalVideoSize = parseInt(originalVideoSize.offsetWidth/1.77);
     
-    if(isMeetingLeft === false) {
-      videoCount === 5 ? setVideoWidth(originalVideoSize) : ""
-    }
-    else {
-      videoCount === 3 ? setVideoWidth(originalVideoSize) : ""
-      videoCount === 5 ? setVideoWidth(originalVideoSize) : ""
-    }
+    videoCount === 3 ? setVideoWidth(originalVideoSize) : ""
     videoCount === 4 ? setVideoWidth(parseInt(originalVideoSize/2)) : ""
     videoCount === 6 ? setVideoWidth(parseInt(originalVideoSize/3)) : ""
+    videoCount === 5 ? setVideoWidth(originalVideoSize) : ""
     // who left the meeting event by closing browser
       // const onVideos = document.querySelectorAll('.VideoSectionEmpty Video');
       //   if (tiles.length + 1 < onVideos.length) {
