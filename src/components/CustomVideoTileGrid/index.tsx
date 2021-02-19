@@ -61,6 +61,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   const [dynamicVideoClass, setDynamicVideoClass] = useState("")
   const [videoTiles, setVideoTiles] = useState(tiles)
   const [videoWidth, setVideoWidth] = useState(0)
+  const [backTiles, setBackTiles] = useState([])
   // const featureTileId = useState(_featureTileId);
   const audioVideo = useAudioVideo();
   var c :any = [];
@@ -82,17 +83,62 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   },[]);
 
   const resizeWindow = () => {
+    var x2 = document.querySelectorAll(".VideoSectionEmpty Video");
     const elmnt = document.getElementById('main_vdo_sec');
-    setVideoWidth(parseInt(elmnt.offsetWidth/1.77));
+    let videoHeight = elmnt.offsetWidth/1.77;
+    x2.length === 4 ? setVideoWidth(parseInt(videoHeight/2)) : setVideoWidth(parseInt(videoHeight));
   }
 
   useEffect(()=>{
     console.log('in the ussefff')
-    isHost ? addClassForVideo(tiles.length) : "";
+    
      if (tiles.length === 0) {
       const elmnt = document.getElementById('main_vdo_sec');
       setVideoWidth(parseInt(elmnt.offsetWidth/1.77));
     }
+    let isLeftTheMeeting = false;
+    var x2 = document.querySelectorAll(".VideoSectionEmpty Video");
+    console.log('33333', tiles);
+    console.log('rosterrrrr ', backTiles);
+    console.log('sssss', tileIdToAttendeeId);
+    console.log('ppppppp', attendeeIdList)
+
+    // Object.keys(tileIdToAttendeeId).map(function(key, index) {
+    //   console.log('bahttt', tileIdToAttendeeId[key])
+    // })
+    if(tiles.length < x2.length) {
+      console.log('yes you are leavingg.......', roster)
+          isLeftTheMeeting = true;
+          if(Object.keys(tileIdToAttendeeId).length === 0) {
+            if(attendeeIdList.length > 1) {
+              const lis = [attendeeIdList[0]];
+              console.log('resulttt', lis)
+              setAttendeeIdList(lis);
+            }
+          }
+          else {
+            console.log('wR FIIIIII')
+            let leftpersonId = backTiles.filter(el => {
+              return !tiles.includes(el) ? el : ""
+            })
+            console.log('leftttttt', leftpersonId[0])
+              let finalRes = attendeeIdList.splice(leftpersonId[0] - 1, 1);
+              const lis = attendeeIdList.filter(o => o !== finalRes[0]);
+              console.log('bahtreeen ', lis)
+              setAttendeeIdList(lis);
+          }
+    }
+    else {
+      setBackTiles(tiles);
+    }
+    console.log('videooooo length', attendeeIdList.length)
+    if(Object.keys(tileIdToAttendeeId).length === 0) {
+      addClassForVideo(1);
+    }
+    else {
+      isLeftTheMeeting ? addClassForVideo(attendeeIdList.length) : addClassForVideo(x2.length);
+    }
+    
   },[tiles.length])
     
   const changeState = (data:any)=>{
@@ -120,12 +166,14 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
         isMeetingLeft = true;
       }
       meetingManager.audioVideo.realtimeSendDataMessage("attendeeIdList", lis, 1000);
-      //console.log(attendeeIdList);
+      console.log('hereeeeooogoooo',lis);
       //draw();
       addClassForVideo(lis.length)
     }
 
-  const addLocalVideo = () => {      
+  const addLocalVideo = () => {     
+    
+    console.log('=========',attendeeId);
         let lis :any = [];  
         if(!(attendeeIdList.includes(attendeeId))){
           lis = [...attendeeIdList , attendeeId];
@@ -133,11 +181,13 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
           isMeetingLeft = false;
         }
         else{
-          lis =  attendeeIdList.filter(o => o !== attendeeId);
-          setAttendeeIdList(lis);
-          isMeetingLeft = true;
+          // lis =  attendeeIdList.filter(o => o !== attendeeId);
+          // console.log('eeeeeeeeeeee',lis); 
+          // setAttendeeIdList(lis);
+          // isMeetingLeft = true;
         }
       meetingManager.audioVideo.realtimeSendDataMessage("attendeeIdList", lis, 1000);
+      
       addClassForVideo(lis.length)
     }
   
