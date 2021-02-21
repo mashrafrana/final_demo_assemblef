@@ -371,9 +371,9 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
             if(video.length < 4 || video.length === 5) {
               for (let i = 0; i < video.length; i ++){
                 if(i === 0)
-                  ctx.drawImage(video[i], 0, 0, big_img_width, big_img_height, init_x, init_y, big_img_width*ratio, big_img_height*ratio);
+                  ctx.drawImage(video[i], 80, 150, big_img_width, big_img_height, init_x, init_y, big_img_width*ratio, big_img_height*ratio);
                 else if (i === 1) {
-                  ctx.drawImage(video[i], 0, 0, big_img_width,big_img_height, init_x + big_img_width, init_y, big_img_width*ratio, big_img_height*ratio);  
+                  ctx.drawImage(video[i], 80, 150, big_img_width,big_img_height, init_x + big_img_width, init_y, big_img_width*ratio, big_img_height*ratio);  
                 }
                 else if (i === 2) {
                   ctx.drawImage(video[i], init_x + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
