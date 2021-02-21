@@ -299,6 +299,8 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       var small_img_width = 169
       var small_img_height = 99
       var gap = 0
+      var canvasWidth = 1280;
+      var canvasHeight = 720;
       
       // var all_videos = document.getElementsByClassName('canvas_vdo')
       // var all_videos_filtered = [];
@@ -360,14 +362,18 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
             big_img_width = 213
             big_img_height = 240
           }
+          // get ratio 
+          var hRatio = canvasWidth  / big_img_width    ;
+          var vRatio =  canvasHeight / big_img_height  ;
+          var ratio  = Math.min ( hRatio, vRatio );
 
           if(video && ctx){
             if(video.length < 4 || video.length === 5) {
               for (let i = 0; i < video.length; i ++){
                 if(i === 0)
-                  ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
+                  ctx.drawImage(video[i], 0, 0, big_img_width, big_img_height, init_x, init_y, big_img_width*ratio, big_img_height*ratio);
                 else if (i === 1) {
-                  ctx.drawImage(video[i], init_x + big_img_width, init_y, big_img_width, big_img_height);  
+                  ctx.drawImage(video[i], 0, 0, big_img_width,big_img_height, init_x + big_img_width, init_y, big_img_width*ratio, big_img_height*ratio);  
                 }
                 else if (i === 2) {
                   ctx.drawImage(video[i], init_x + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
