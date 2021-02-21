@@ -14,7 +14,7 @@ import {
     useRosterState,
     useMeetingManager,
     useAudioVideo,
-    RemoteVideo
+    RemoteVideo,
 } from 'amazon-chime-sdk-component-library-react';
 import { useAppState } from '../../providers/AppStateProvider';
 // import vp from  "./video-placeholder.jpg";
@@ -56,7 +56,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   const { tileId: localVideoTileId, isVideoEnabled } = useLocalVideo();
   const { roster } = useRosterState();
   const meetingManager = useMeetingManager();
-  const { isHost , attendeeId } = useAppState();
+  const { isHost , attendeeId, rosterList } = useAppState();
   const [attendeeIdList  ,setAttendeeIdList] = useState([]);
   const [dynamicVideoClass, setDynamicVideoClass] = useState("")
   const [videoTiles, setVideoTiles] = useState(tiles)
@@ -66,7 +66,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   // const featureTileId = useState(_featureTileId);
   const audioVideo = useAudioVideo();
   var c :any = [];
-
+  console.log('tititiitiiitti', tiles)
   // const attendeeId = audioVideoController.configuration.credentials.attendeeId;
   useEffect(()=>{
     window.addEventListener('resize', resizeWindow)
@@ -91,7 +91,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   }
 
   useEffect(()=>{
-    console.log('in the ussefff')
+    console.log('in the ussefff', tiles)
     
      if (tiles.length === 0) {
       const elmnt = document.getElementById('main_vdo_sec');
@@ -99,52 +99,59 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     }
     let isLeftTheMeeting = false;
     var x2 = document.querySelectorAll(".VideoSectionEmpty Video");
-    console.log('33333', tiles);
-    console.log('rosterrrrr ', backTiles);
-    console.log('sssss', tileIdToAttendeeId);
-    console.log('ppppppp', attendeeIdList)
+    // console.log('33333', tiles);
+    // console.log('rosterrrrr ', backTiles);
+    // console.log('sssss', tileIdToAttendeeId);
+    // console.log('ppppppp', attendeeIdList)
 
     // Object.keys(tileIdToAttendeeId).map(function(key, index) {
     //   console.log('bahttt', tileIdToAttendeeId[key])
     // })
-    if(tiles.length < x2.length) {
-      console.log('yes you are leavingg.......', roster)
-      const attendees = Object.values(roster);
-      attendees.map(el => {
-        console.log('=p=p=p=p= ', el)
-      })
+    const attendees = Object.values(rosterList);
+    if(attendees.length < x2.length) {
+      console.log('x2', x2.length)
+      console.log('tilesss', tiles.length)
+        addClassForVideo(attendees.length)
+        let newAttendee = attendees.map(el => {
+          return el.chimeAttendeeId;
+        })
+        console.log('yes you are leavingg=======', newAttendee)
+        console.log('=======', attendeeIdList)
           isLeftTheMeeting = true;
-          if(Object.keys(tileIdToAttendeeId).length === 0) {
-            if(attendeeIdList.length > 1) {
-              const lis = [attendeeIdList[0]];
-              console.log('resulttt', lis)
-              setAttendeeIdList(lis);
-            }
-          }
-          else {
-            console.log('wR FIIIIII')
-            let leftpersonId = backTiles.filter(el => {
-              return !tiles.includes(el) ? el : ""
+          if(attendeeIdList.length > 1) {
+            let newList = attendeeIdList.filter(el => {
+              return newAttendee.includes(el);
             })
-            console.log('leftttttt', leftpersonId[0])
-              let finalRes = attendeeIdList.splice(leftpersonId[0] - 1, 1);
-              const lis = attendeeIdList.filter(o => o !== finalRes[0]);
-              console.log('bahtreeen ', lis)
-              setAttendeeIdList(lis);
+            console.log('huuuuuu ', newList)
+            setAttendeeIdList(newList);
           }
+          // if(Object.keys(attendees).length === 0) {
+          //   if(attendeeIdList.length > 1) {
+          //     const lis = [attendeeIdList[0]];
+          //     setAttendeeIdList(lis);
+          //   }
+          // }
+          // else {
+          //   let leftpersonId = backTiles.filter(el => {
+          //     return !tiles.includes(el) ? el : ""
+          //   })
+          //     let finalRes = attendeeIdList.splice(leftpersonId[0] - 1, 1);
+          //     const lis = attendeeIdList.filter(o => o !== finalRes[0]);
+          //     setAttendeeIdList(lis);
+          // }
     }
     else {
-      setBackTiles(tiles);
+      //setBackTiles(tiles);
     }
-    console.log('videooooo length', attendeeIdList.length)
-    if(Object.keys(tileIdToAttendeeId).length === 0) {
-      addClassForVideo(1);
-    }
-    else {
-      isLeftTheMeeting ? addClassForVideo(attendeeIdList.length) : addClassForVideo(x2.length);
-    }
+    // console.log('videooooo length', attendeeIdList.length)
+    // if(Object.keys(tileIdToAttendeeId).length === 0) {
+    //   addClassForVideo(1);
+    // }
+    // else {
+    //   isLeftTheMeeting ? addClassForVideo(attendeeIdList.length) : addClassForVideo(x2.length);
+    // }
     
-  },[tiles.length])
+  },[rosterList])
     
   const changeState = (data:any)=>{
     console.log('in the changestat')

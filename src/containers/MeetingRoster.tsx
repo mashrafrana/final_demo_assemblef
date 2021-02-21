@@ -1,22 +1,22 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import {
   Roster,
   RosterHeader,
   RosterGroup,
   useRosterState,
-  RosterAttendee
+  RosterAttendee,
 } from 'amazon-chime-sdk-component-library-react';
-
+import { useAppState } from '../providers/AppStateProvider';
 import { useNavigation } from '../providers/NavigationProvider';
 
 const MeetingRoster = () => {
   const { roster } = useRosterState();
   const [filter, setFilter] = useState('');
   const { closeRoster } = useNavigation();
-
+  const { setRosterInfo } = useAppState();
   let attendees = Object.values(roster);
 
   if (filter) {
@@ -24,6 +24,11 @@ const MeetingRoster = () => {
       attendee?.name.toLowerCase().includes(filter.trim().toLowerCase())
     );
   }
+
+  useEffect(() => {
+    console.log('rosterrrrr222 meeting..........', roster);
+    setRosterInfo(roster);
+  }, [roster, setRosterInfo]);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value);

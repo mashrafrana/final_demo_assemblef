@@ -12,10 +12,18 @@ interface AppStateValue {
   localUserName: string;
   theme: string;
   region: string;
-  attendeeId :string;
+  attendeeId: string;
   isHost: boolean;
+  rosterList: array;
   toggleTheme: () => void;
-  setAppMeetingInfo: (meetingId: string, name: string, region: string,attendeeId : string, isHost: boolean) => void;
+  setAppMeetingInfo: (
+    meetingId: string,
+    name: string,
+    region: string,
+    attendeeId: string,
+    isHost: boolean
+  ) => void;
+  setRosterInfo: (rosterList: array)
 }
 
 const AppStateContext = React.createContext<AppStateValue | null>(null);
@@ -38,6 +46,7 @@ export function AppStateProvider({ children }: Props) {
   const [localUserName, setLocalName] = useState('');
   const [isHost, setIsHost] = useState(false);
   const [attendeeId, setAttendeeId] = useState('');
+  const [rosterList, setRosterList] = useState([]);
   const [theme, setTheme] = useState(() => {
     const storedTheme = localStorage.getItem('theme');
     return storedTheme || 'light';
@@ -58,7 +67,7 @@ export function AppStateProvider({ children }: Props) {
     name: string,
     region: string,
     isHost: boolean,
-    attendeeId :string,
+    attendeeId: string
   ) => {
     setRegion(region);
     setMeeting(meetingId);
@@ -66,6 +75,11 @@ export function AppStateProvider({ children }: Props) {
     setIsHost(isHost);
     setAttendeeId(attendeeId);
   };
+
+  const setRosterInfo = (rosterList: array) => {
+    console.log('setting......')
+    setRosterList(rosterList);
+  }
 
   const providerValue = {
     meetingId,
@@ -75,7 +89,9 @@ export function AppStateProvider({ children }: Props) {
     attendeeId,
     isHost,
     toggleTheme,
-    setAppMeetingInfo
+    setAppMeetingInfo,
+    rosterList,
+    setRosterInfo
   };
 
   return (
