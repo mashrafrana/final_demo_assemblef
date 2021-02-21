@@ -367,13 +367,17 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
           var vRatio =  canvasHeight / big_img_height  ;
           var ratio  = Math.min ( hRatio, vRatio );
 
+          var centerShift_x = ( canvasWidth - big_img_width*ratio ) / 2;
+          var centerShift_y = ( canvasHeight - big_img_height*ratio ) / 2;  
+          ctx.clearRect(0,0,canvasWidth, canvasHeight);
+
           if(video && ctx){
             if(video.length < 4 || video.length === 5) {
               for (let i = 0; i < video.length; i ++){
                 if(i === 0)
-                  ctx.drawImage(video[i], 200, 200, big_img_width, big_img_height, init_x, init_y, big_img_width*ratio, big_img_height*ratio);
+                  ctx.drawImage(video[i], 0, 0, big_img_width, big_img_height, centerShift_x, centerShift_y, big_img_width*ratio, big_img_height*ratio);
                 else if (i === 1) {
-                  ctx.drawImage(video[i], 200, 200, big_img_width,big_img_height, init_x + big_img_width, init_y, big_img_width*ratio, big_img_height*ratio);  
+                  ctx.drawImage(video[i], 0, 0, big_img_width,big_img_height, centerShift_x + big_img_width, centerShift_y, big_img_width*ratio, big_img_height*ratio);  
                 }
                 else if (i === 2) {
                   ctx.drawImage(video[i], init_x + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
