@@ -14,8 +14,7 @@ import {
     useRosterState,
     useMeetingManager,
     useAudioVideo,
-    RemoteVideo,
-    useActiveSpeakersState
+    RemoteVideo
 } from 'amazon-chime-sdk-component-library-react';
 import { useAppState } from '../../providers/AppStateProvider';
 // import vp from  "./video-placeholder.jpg";
@@ -65,7 +64,6 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   const [backTiles, setBackTiles] = useState([])
   const [canvasHeight, setCanvasHeight] = useState(0)
   // const featureTileId = useState(_featureTileId);
-  console.log('here we goooooooooo ', activeSpeakers)
   const audioVideo = useAudioVideo();
   var c :any = [];
 
