@@ -14,7 +14,8 @@ import {
     useRosterState,
     useMeetingManager,
     useAudioVideo,
-    RemoteVideo
+    RemoteVideo,
+    useActiveSpeakersState
 } from 'amazon-chime-sdk-component-library-react';
 import { useAppState } from '../../providers/AppStateProvider';
 // import vp from  "./video-placeholder.jpg";
@@ -62,7 +63,9 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
   const [videoTiles, setVideoTiles] = useState(tiles)
   const [videoWidth, setVideoWidth] = useState(0)
   const [backTiles, setBackTiles] = useState([])
+  const activeSpeakers = useActiveSpeakersState();
   // const featureTileId = useState(_featureTileId);
+  console.log('here we goooooooooo ', activeSpeakers)
   const audioVideo = useAudioVideo();
   var c :any = [];
 
@@ -108,6 +111,10 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     // })
     if(tiles.length < x2.length) {
       console.log('yes you are leavingg.......', roster)
+      const attendees = Object.values(roster);
+      attendees.map(el => {
+        console.log('=p=p=p=p= ', el)
+      })
           isLeftTheMeeting = true;
           if(Object.keys(tileIdToAttendeeId).length === 0) {
             if(attendeeIdList.length > 1) {
@@ -335,19 +342,19 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
 
           if(video.length === 2) {
             big_img_width = 640
-            big_img_height = 720
+            big_img_height = big_img_width/1.77
           }
           else if(video.length === 3) {
             big_img_width = 426
-            big_img_height = 720
+            big_img_height = big_img_width/1.77
           }
           else if(video.length === 4) {
-            big_img_width = 320
-            big_img_height = 360
+            big_img_width = 640
+            big_img_height = 361
           }
           else if(video.length === 5) {
             big_img_width = 256
-            big_img_height = 720
+            big_img_height = big_img_width/1.77
           }
           else if(video.length === 6) {
             big_img_width = 213
