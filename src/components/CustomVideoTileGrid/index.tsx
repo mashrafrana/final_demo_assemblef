@@ -348,27 +348,33 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
 
           if(video.length === 2) {
             big_img_width = 640
-            big_img_height = big_img_width/1.22
+            big_img_height = canvasHeight/1.22
+            setCanvasHeight(big_img_height);
           }
           else if(video.length === 3) {
             big_img_width = 426
-            big_img_height = big_img_width/1.22
+            big_img_height = canvasHeight/1.77
+            setCanvasHeight(big_img_height);
           }
           else if(video.length === 4) {
             big_img_width = 640
             big_img_height = 361
+            setCanvasHeight(720);
           }
-          else if(video.length === 5) {
-            big_img_width = 256
-            big_img_height = big_img_width/1.77
+          else {
+            setCanvasHeight(canvasHeight);
           }
-          else if(video.length === 6) {
-            big_img_width = 213
-            big_img_height = 240
-          }
+          // else if(video.length === 5) {
+          //   big_img_width = 256
+          //   big_img_height = big_img_width/1.77
+          // }
+          // else if(video.length === 6) {
+          //   big_img_width = 213
+          //   big_img_height = 240
+          // }
 
-
-          setCanvasHeight(big_img_height);
+          
+          
           if(video && ctx){
             if(video.length < 4 || video.length === 5) {
               for (let i = 0; i < video.length; i ++){
@@ -479,7 +485,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     
   return (
       <Fragment>
-         { isHost ? <canvas id="canvas" width="1280" height="720" style={{borderRadius: '20px',backgroundColor:'red', display:'none'}}></canvas>:null}           
+         { isHost ? <canvas id="canvas" width="1280" height={canvasHeight} style={{borderRadius: '20px',backgroundColor:'red', display:'none'}}></canvas>:null}           
           <div className={"DashboardMainContent"} id="videoContainerId">
               <div id="main_vdo_sec" style={{"min-height": parseInt(videoWidth)+"px"}} className={attendeeIdList.length === 0 ? "VideoSection" : "VideoSectionEmpty"}>
                 <div className={dynamicVideoClass}>
