@@ -347,11 +347,11 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
 
           if(video.length === 2) {
             big_img_width = 640
-            big_img_height = big_img_width/1.77
+            big_img_height = big_img_width/1.22
           }
           else if(video.length === 3) {
             big_img_width = 426
-            big_img_height = big_img_width/1.77
+            big_img_height = big_img_width/1.22
           }
           else if(video.length === 4) {
             big_img_width = 640
