@@ -304,7 +304,8 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
       var small_img_width = 169
       var small_img_height = 99
       var gap = 0
-      
+      var canvasWidth = 1280;
+      var canvasHeight = 720;
       // var all_videos = document.getElementsByClassName('canvas_vdo')
       // var all_videos_filtered = [];
       // for (var i = 0; i < all_videos.length; i++) {
@@ -365,14 +366,20 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
             big_img_width = 213
             big_img_height = 240
           }
-          setCanvasHeight(big_img_height);
+          // get the ratio
+          var scale = Math.min(canvasWidth / big_img_width, canvasHeight / big_img_height);
+    // get the top left position of the image
+          var xAxis = (canvasWidth / 2) - (big_img_width / 2) * scale;
+          var yAxis = (canvasHeight / 2) - (big_img_height / 2) * scale;
+          ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+          //setCanvasHeight(big_img_height);
           if(video && ctx){
             if(video.length < 4 || video.length === 5) {
               for (let i = 0; i < video.length; i ++){
                 if(i === 0)
-                  ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
+                  ctx.drawImage(video[i], xAxis, yAxis, big_img_width * scale, big_img_height * scale);
                 else if (i === 1) {
-                  ctx.drawImage(video[i], init_x + big_img_width, init_y, big_img_width, big_img_height);  
+                  ctx.drawImage(video[i], xAxis + big_img_width, yAxis, big_img_width * scale, big_img_height * scale);  
                 }
                 else if (i === 2) {
                   ctx.drawImage(video[i], init_x + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
@@ -476,7 +483,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     
   return (
       <Fragment>
-         { isHost ? <canvas id="canvas" width="1280" height={canvasHeight} style={{borderRadius: '20px',backgroundColor:'red', display:'none'}}></canvas>:null}           
+         { isHost ? <canvas id="canvas" width="1280" height="720" style={{borderRadius: '20px',backgroundColor:'red', display:'none'}}></canvas>:null}           
           <div className={"DashboardMainContent"} id="videoContainerId">
               <div id="main_vdo_sec" style={{"min-height": parseInt(videoWidth)+"px"}} className={attendeeIdList.length === 0 ? "VideoSection" : "VideoSectionEmpty"}>
                 <div className={dynamicVideoClass}>
