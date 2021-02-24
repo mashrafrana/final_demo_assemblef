@@ -389,6 +389,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                           }
                         }
                         else if(video.length === 3) {
+                          console.log('bahtreen', video[i].offsetWidth)
                           for (let i = 0; i < video.length; i ++){
                               if(i === 0)
                                 ctx.drawImage(video[i], 120, 0,390, 400,  0, 0, 426, 720);
