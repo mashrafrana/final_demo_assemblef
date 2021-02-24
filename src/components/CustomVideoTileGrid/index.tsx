@@ -375,41 +375,47 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
 
           
           
-          if(video && ctx){
-            if(video.length === 1) {
-              ctx.drawImage(video[0], init_x, init_y, big_img_width, big_img_height);
-            }
-            if(video.length < 4) {
-              for (let i = 0; i < video.length; i ++){
-                  if(i === 0)
-                    ctx.drawImage(video[i], 185, 0,490, 520,  0, 0, 640, 720);
-                else if (i === 1) {
-                  ctx.drawImage(video[i], 185, 0,490, 520,  640, 0, 640, 720); 
-                }
-                else if (i === 2) {
-                  ctx.drawImage(video[i], init_x + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
-                }
-                else if (i === 3) {
-                  ctx.drawImage(video[i], init_x + big_img_width + big_img_width + big_img_width, init_y, big_img_width, big_img_height); 
-                }
-              }
-            }
-            else if(video.length === 4){
-              for (let i = 0; i < video.length; i ++){
-                if(i === 0)
-                  ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
-                else if (i === 1) {
-                  ctx.drawImage(video[i], init_x + big_img_width, init_y, big_img_width, big_img_height);  
-                }
-                else if (i === 2) {
-                  ctx.drawImage(video[i], init_x, init_y + big_img_height, big_img_width, big_img_height); 
-                }
-                else if (i === 3) {
-                  ctx.drawImage(video[i], init_x + big_img_width, init_y + big_img_height, big_img_width, big_img_height); 
-                }
-              }
-            }
-          }
+                      if(video && ctx){
+                        if(video.length === 1) {
+                          ctx.drawImage(video[0], init_x, init_y, big_img_width, big_img_height);
+                        }
+                        else if(video.length === 2) {
+                          for (let i = 0; i < video.length; i ++){
+                              if(i === 0)
+                                ctx.drawImage(video[i], 195, 0,490, 500,  0, 0, 640, 720);
+                            else if (i === 1) {
+                              ctx.drawImage(video[i], 195, 0,490, 500,  640, 0, 640, 720); 
+                            }
+                          }
+                        }
+                        else if(video.length === 3) {
+                          for (let i = 0; i < video.length; i ++){
+                              if(i === 0)
+                                ctx.drawImage(video[i], 120, 0,390, 400,  0, 0, 426, 720);
+                            else if (i === 1) {
+                              ctx.drawImage(video[i], 120, 0,390, 400,  426, 0, 426, 720); 
+                            }
+                            else if (i === 2) {
+                              ctx.drawImage(video[i], 120, 0,390, 400,  852, 0, 426, 720); 
+                            }
+                          }
+                        }
+                        else if(video.length === 4){
+                          for (let i = 0; i < video.length; i ++){
+                            if(i === 0)
+                              ctx.drawImage(video[i], init_x, init_y, big_img_width, big_img_height);
+                            else if (i === 1) {
+                              ctx.drawImage(video[i], init_x + big_img_width, init_y, big_img_width, big_img_height);  
+                            }
+                            else if (i === 2) {
+                              ctx.drawImage(video[i], init_x, init_y + big_img_height, big_img_width, big_img_height); 
+                            }
+                            else if (i === 3) {
+                              ctx.drawImage(video[i], init_x + big_img_width, init_y + big_img_height, big_img_width, big_img_height); 
+                            }
+                          }
+                        }
+                      }
 
           var logoImg = document.getElementById('logoImgId');
           ctx.drawImage(logoImg, 1150, 660, 120, 25)
