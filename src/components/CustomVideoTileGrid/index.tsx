@@ -252,7 +252,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
                   }
                   mediaRecorder = new MediaRecorder(mediaStream, {
                     mimeType: 'video/webm;codecs=h264',
-                    videoBitsPerSecond : 3000000
+                    videoBitsPerSecond : 3145728
                   });
       
                   mediaRecorder.addEventListener('dataavailable', (e) => {
