@@ -235,7 +235,7 @@ export const CustomVideoTileGrid: React.FC<Props> = ({
     
                 ws.addEventListener('open', (e) => {
                   console.log('WebSocket Open', e);
-                  mediaStream = document.querySelector('canvas').captureStream(60); // 30 FPS
+                  mediaStream = document.querySelector('canvas').captureStream(30); // 30 FPS
                   var AudioContext = window.AudioContext || window.webkitAudioContext;
                     const audioCtx = new AudioContext();
                     var dest = audioCtx.createMediaStreamDestination();
