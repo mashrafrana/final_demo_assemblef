@@ -46,6 +46,7 @@ const MeetingRoster = () => {
     <RosterDiv>
       <ParticipantVideo>
         <div className="follower-list">
+          <p>Participants</p>
           <ul className="follower-ul">
             {Object.keys(roster).map((el, index) => (
               <li index={index}>

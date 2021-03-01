@@ -73,6 +73,12 @@ export const ParticipantVideo = styled.div`
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
   }
+
+  p {
+    font-weight: 300;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
 `;
 
 export const RosterDiv = styled.div`
