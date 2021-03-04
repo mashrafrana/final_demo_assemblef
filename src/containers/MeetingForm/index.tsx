@@ -1,7 +1,7 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useContext, ChangeEvent } from 'react';
+import React, { useState, useContext, ChangeEvent, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   Input,
@@ -12,7 +12,7 @@ import {
   useMeetingManager,
   Modal,
   ModalBody,
-  ModalHeader
+  ModalHeader,
 } from 'amazon-chime-sdk-component-library-react';
 
 import { getErrorContext } from '../../providers/ErrorProvider';
@@ -24,14 +24,14 @@ import RegionSelection from './RegionSelection';
 import { fetchMeeting, createGetAttendeeCallback } from '../../utils/api';
 import { useAppState } from '../../providers/AppStateProvider';
 
-const MeetingForm: React.FC = () => {
+const MeetingForm: React.FC = props => {
   const meetingManager = useMeetingManager();
   const {
     setAppMeetingInfo,
     region: appRegion,
-    meetingId: appMeetingId
+    meetingId: appMeetingId,
   } = useAppState();
-  const [meetingId, setMeetingId] = useState(appMeetingId);
+  const [meetingId, setMeetingId] = useState(props.user_meeting_id);
   const [meetingErr, setMeetingErr] = useState(false);
   const [name, setName] = useState('');
   const [nameErr, setNameErr] = useState(false);
@@ -39,7 +39,6 @@ const MeetingForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { errorMessage, updateErrorMessage } = useContext(getErrorContext());
   const history = useHistory();
-
 
   const handleJoinMeeting = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,10 +66,16 @@ const MeetingForm: React.FC = () => {
 
       await meetingManager.join({
         meetingInfo: JoinInfo.Meeting,
-        attendeeInfo: JoinInfo.Attendee
+        attendeeInfo: JoinInfo.Attendee,
       });
       console.log(JoinInfo.host);
-      setAppMeetingInfo(id, attendeeName, region, JoinInfo.host,JoinInfo.Attendee.AttendeeId);
+      setAppMeetingInfo(
+        id,
+        attendeeName,
+        region,
+        JoinInfo.host,
+        JoinInfo.Attendee.AttendeeId
+      );
       history.push(routes.DEVICE);
     } catch (error) {
       updateErrorMessage(error.message);
@@ -92,11 +97,12 @@ const MeetingForm: React.FC = () => {
       <FormField
         field={Input}
         label="Meeting Id"
-        value={meetingId}
+        value={props.user_meeting_id}
+        readonly
         infoText="Anyone with access to the meeting ID can join"
         fieldProps={{
           name: 'meetingId',
-          placeholder: 'Enter Meeting Id'
+          placeholder: 'Enter Meeting Id',
         }}
         errorText="Please enter a valid meeting ID"
         error={meetingErr}
@@ -113,7 +119,7 @@ const MeetingForm: React.FC = () => {
         value={name}
         fieldProps={{
           name: 'name',
-          placeholder: 'Enter Your Name'
+          placeholder: 'Enter Your Name',
         }}
         errorText="Please enter a valid name"
         error={nameErr}

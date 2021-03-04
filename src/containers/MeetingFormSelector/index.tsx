@@ -4,7 +4,7 @@
 import React from 'react';
 import {
   Flex,
-  SecondaryButton
+  SecondaryButton,
 } from 'amazon-chime-sdk-component-library-react';
 
 import MeetingForm from '../MeetingForm';
@@ -13,14 +13,14 @@ import useToggle from '../../hooks/useToggle';
 import SIPMeetingProvider from '../../providers/SIPMeetingProvider';
 import { StyledDiv, StyledWrapper } from './Styled';
 
-const MeetingFormSelector: React.FC = () => {
+const MeetingFormSelector: React.FC = props => {
   const { isActive, toggle } = useToggle(false);
   const formToShow = isActive ? (
     <SIPMeetingProvider>
       <SIPMeeting />
     </SIPMeetingProvider>
   ) : (
-    <MeetingForm />
+    <MeetingForm user_meeting_id={props.meeting_id} />
   );
   const buttonText = isActive ? 'Join without SIP' : 'Join via SIP';
 

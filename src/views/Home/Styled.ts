@@ -17,3 +17,15 @@ export const StyledLayout = styled.main`
     padding-top: 0rem;
   }
 `;
+
+export const ErrorMessage = styled.div`
+  position: absolute;
+  top: 355px;
+  width: 100%;
+  .wrap {
+    width: 300px;
+    margin: auto;
+    text-align: center;
+    position: relative;
+  }
+`;
